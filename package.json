@@ -1,0 +1,22 @@
+{
+  "name": "digital_cv",
+  "version": "0.0.2",
+  "description": "",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "truffle test test/*"
+  },
+  "author": "Geremia Pompei",
+  "license": "MIT",
+  "devDependencies": {
+    "truffle-contract": "^1.1.11",
+    "web3": "^0.20.0"
+  },
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^2.0.4",
+    "body-parser": "^1.18.2",
+    "dotenv": "^16.0.0",
+    "express": "^4.16.2",
+    "nodemon": "^1.14.12"
+  }
+}
