@@ -1,17 +1,15 @@
 {
   "name": "digital_cv",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "",
   "scripts": {
     "start": "node index.js"
   },
   "author": "Geremia Pompei",
   "license": "MIT",
-  "devDependencies": {
-    "truffle-contract": "^1.1.11",
-    "web3": "^0.20.0"
-  },
   "dependencies": {
+    "truffle-contract": "^1.1.11",
+    "web3": "^0.20.0",
     "@truffle/hdwallet-provider": "^2.0.4",
     "body-parser": "^1.18.2",
     "dotenv": "^16.0.0",
