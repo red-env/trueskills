@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "description": "",
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "author": "Geremia Pompei",
   "license": "MIT",
