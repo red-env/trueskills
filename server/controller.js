@@ -1,11 +1,10 @@
 const contract = require("truffle-contract");
 const certificates_artifact = require("../smart_contract/build/contracts/Certificates.json");
 const truffle_config = require("../smart_contract/truffle-config.js");
-const Web3 = require("web3");
+const network = truffle_config.networks.ropsten;
 
 // Configuration
 function getContract() {
-    const network = truffle_config.networks.ropsten;
     const provider = network.provider();
     const Certificates = contract(certificates_artifact);
     Certificates.setProvider(provider);
@@ -16,6 +15,9 @@ function getContract() {
 }
 
 module.exports = {
+    getAddress() {
+        return certificates_artifact.networks[network.network_id].address
+    },
     async addStudent(student) {
         student.birthdate = new Date(student.birthdate).getTime();
         const certificates = await getContract().deployed();
@@ -67,5 +69,19 @@ module.exports = {
             assignment.comment,
             assignment.vote
         );
+    },
+    async getAssignment(id) {
+        const certificates = await getContract().deployed();
+        const assignment = await certificates.assignments(id);
+        const student = await this.getStudent(assignment[1]);
+        const certificate = await this.getCertificate(assignment[2]);
+        return {
+          id: assignment[0],
+          student,
+          certificate,
+          comment: assignment[3],
+          vote: assignment[4],
+          __metadata: assignment,
+        };
     }
 };

@@ -6,301 +6,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital CV</title>
     <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue3-sfc-loader/dist/vue3-sfc-loader.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
     <div id="app">
         <div class="p-4">
             <header>
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" :class="{active: (route == 'search_certificate')}" @click="() => route = 'search_certificate'">search certificate</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" :class="{active: (route == 'create_certificate')}" @click="() => route = 'create_certificate'">create certificate</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" :class="{active: (route == 'search_student')}" @click="() => route = 'search_student'">search student</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" :class="{active: (route == 'create_student')}" @click="() => route = 'create_student'">create student</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" :class="{active: (route == 'create_assignment')}" @click="() => route = 'create_assignment'">create assignment</a>
-                    </li>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                     <a v-for="(setting, key) in settings" :key="key" class="nav-link rounded-sm bg-light" :class="{'border border-primary': (route == setting.menu_path)}" @click="() => route = setting.menu_path">
+                            {{setting.menu_title}}
+                    </a>
+                    <a v-if="contract_address" class="nav-link" target="_blank" :href="etherscan_url+'address/'+contract_address">etherscan contract</a>
                     <div class="spinner-border" role="status" v-if="loading">
                         <span class="sr-only">Loading...</span>
                     </div>
-                </ul>
+                </nav>
             </header>
-            <div class="p-4" v-if="route == 'search_certificate'">
-                <div class="p-4">
-                    <form @submit.prevent="search_certificate()">
-                        <div class="form-group">
-                            <label for="id_certificate">Id certificate</label>
-                            <input type="number" min="0" class="form-control" id="id_certificate" placeholder="search id" v-model="id_certificate">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
-                </div>
-                <div class="p-4">
-                    <table v-if="certificate" class="table">
-                        <tbody id="certificate">
-                            <tr v-for="(value, key) in certificate" :key="key">
-                                <td>{{key}}</td>
-                                <td>{{value}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <label v-else>Certificate not found</label>
-                </div>
-            </div>
-            <div class="p-4" v-if="route == 'create_certificate'">
-                <form class="p-4" @submit.prevent="create_certificate()">
-                    <div class="form-group">
-                        <label for="post_certificate_title">Title</label>
-                        <input type="text" class="form-control" id="post_certificate_title" placeholder="title" v-model="post_certificate.title">
-                    </div>
-                    <div class="form-group">
-                        <label for="post_institute_description">Description</label>
-                        <input type="text" class="form-control" id="post_institute_description" placeholder="description" v-model="post_certificate.description">
-                    </div>
-                    <div class="form-group">
-                        <label for="post_max_vote">Max Vote</label>
-                        <input type="number"  class="form-control" id="post_max_vote" placeholder="max vote" v-model="post_certificate.max_vote">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
-                </form>
-                <div class="p-4 table-wrapper-scroll-y my-custom-scrollbar">
-                    <table class="table table-bordered table-striped mb-0">
-                        <tbody>
-                            <tr v-for="(log, key) in logs_certificate" :key="key">
-                                <td scope="row">{{key+1}}</td>
-                                <td>{{log.status}}</td>
-                                <td>
-                                    <textarea disabled cols="150">
-                                        {{JSON.stringify(log.status ? log.data : log.error, {}, "\t")}}
-                                    </textarea>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
 
-            <div class="p-4" v-if="route == 'search_student'">
-                <div class="p-4">
-                    <form @submit.prevent="search_student()">
-                        <div class="form-group">
-                            <label for="id_student">Id student</label>
-                            <input type="number" min="0" class="form-control" id="id_student" placeholder="search id" v-model="id_student">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
-                </div>
-                <div class="p-4">
-                    <table v-if="student" class="table">
-                        <tbody id="student">
-                            <tr v-for="(value, key) in student" :key="key">
-                                <td>{{key}}</td>
-                                <td>{{value}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <label v-else>Student not found</label>
-                </div>
-            </div>
-            <div class="p-4" v-if="route == 'create_student'">
-                <form class="p-4" @submit.prevent="create_student()">
-                    <div class="form-group">
-                        <label for="post_student_name">Name</label>
-                        <input type="text" class="form-control" id="post_student_name" placeholder="name" v-model="post_student.name">
-                    </div>
-                    <div class="form-group">
-                        <label for="post_student_surname">Surname</label>
-                        <input type="text" class="form-control" id="post_student_surname" placeholder="surname" v-model="post_student.surname">
-                    </div>
-                    <div class="form-group">
-                        <label for="post_student_birthdate">Birth Date</label>
-                        <input type="date" class="form-control" id="post_student_birthdate" v-model="post_student.birthdate">
-                    </div>
-                    <div class="form-group">
-                        <label for="post_student_gender">Gender</label>
-                        <select class="form-control" name="post_student_gender" v-model="post_student.gender" id="post_student_gender">
-                            <option value="0">MALE</option>
-                            <option value="1">FEMALE</option>
-                            <option value="2">OTHER</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="post_student_cv">CV</label>
-                        <input type="text" class="form-control" id="post_student_cv" placeholder="cv" v-model="post_student.cv">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
-                </form>
-                <div class="p-4 table-wrapper-scroll-y my-custom-scrollbar">
-                    <table class="table table-bordered table-striped mb-0">
-                        <tbody>
-                            <tr v-for="(log, key) in logs_student" :key="key">
-                                <td scope="row">{{key+1}}</td>
-                                <td>{{log.status}}</td>
-                                <td>
-                                    <textarea disabled cols="150">
-                                        {{JSON.stringify(log.status ? log.data : log.error, {}, "\t")}}
-                                    </textarea>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="p-4" v-if="route == 'create_assignment'">
-                <form class="p-4" @submit.prevent="create_assignment()">
-                    <div class="form-group">
-                        <label for="post_assignment_student">Student</label>
-                        <input type="number" min="0" class="form-control" id="post_assignment_student" placeholder="student id" v-model="post_assignment.student">
-                    </div>
-                    <div class="form-group">
-                        <label for="post_assignment_certificate">Certificate</label>
-                        <input type="number" min="0" class="form-control" id="post_assignment_certificate" placeholder="certificate id" v-model="post_assignment.certificate">
-                    </div>
-                    <div class="form-group">
-                        <label for="post_assignment_comment">Comment</label>
-                        <input type="text" class="form-control" id="post_assignment_comment" placeholder="comment" v-model="post_assignment.comment">
-                    </div>
-                    <div class="form-group">
-                        <label for="post_assignment_vote">Vote</label>
-                        <input type="number" min="0" class="form-control" id="post_assignment_vote" placeholder="vote" v-model="post_assignment.vote">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
-                </form>
-                <div class="p-4 table-wrapper-scroll-y my-custom-scrollbar">
-                    <table class="table table-bordered table-striped mb-0">
-                        <tbody>
-                            <tr v-for="(log, key) in logs_assignment" :key="key">
-                                <td scope="row">{{key+1}}</td>
-                                <td>{{log.status}}</td>
-                                <td>
-                                    <textarea disabled rows="30" cols="150">
-                                        {{JSON.stringify(log.status ? log.data : log.error, {}, "\t")}}
-                                    </textarea>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div v-for="(setting, key) in settings" :key="key">
+                <div v-if="route == setting.menu_path">
+                    <Search v-if="setting.component.type == 'search'"
+                        :name="setting.component.name"
+                        :path="setting.component.path"
+                        @loading="(flag) => loading=flag"
+                    ></Search>
+                    <Create v-if="setting.component.type == 'create'"
+                        :name="setting.component.name"
+                        :path="setting.component.path"
+                        :structs="setting.component.structs"
+                        :etherscan_url="etherscan_url"
+                        @loading="(flag) => loading=flag"
+                    ></Create>
                 </div>
             </div>
         </div>
     </div>
     <script>
+        const { loadModule } = window['vue3-sfc-loader'];
+        const options = {
+            moduleCache: {
+                vue: Vue
+            },
+            async getFile(url) {
+                const res = await fetch(url);
+                if ( !res.ok )
+                    throw Object.assign(new Error(res.statusText + ' ' + url), { res });
+                return {
+                    getContentData: asBinary => asBinary ? res.arrayBuffer() : res.text(),
+                }
+            },
+            addStyle(textContent) {
+                const style = Object.assign(document.createElement('style'), { textContent });
+                const ref = document.head.getElementsByTagName('style')[0] || null;
+                document.head.insertBefore(style, ref);
+            },
+        }
         Vue.createApp({
+            components: {
+                Search: Vue.defineAsyncComponent( () => loadModule('./components/search.js', options) ),
+                Create: Vue.defineAsyncComponent( () => loadModule('./components/create.js', options) )
+            },
             data() {
                 return {
                     route: "search_certificate",
                     loading: false,
-
-                    post_certificate: {
-                        title: "",
-                        description: "",
-                        max_vote: 0,
-                    },
-                    id_certificate: null,
-                    certificate: null,
-                    logs_certificate: [],
-
-                    post_student: {
-                        name: "",
-                        surname: "",
-                        birthdate: 0,
-                        gender: 0,
-                        cv: ""
-                    },
-                    id_student: null,
-                    student: null,
-                    logs_student: [],
-
-                    post_assignment: {
-                        student: 0,
-                        certificate: 0,
-                        comment: "",
-                        vote: 0
-                    },
-                    logs_assignment: []
+                    etherscan_url: "https://ropsten.etherscan.io/",
+                    contract_address: null,
+                    settings: []
                 }
             },
-            methods: {
-                async create_certificate() {
-                    this.loading = true;
-                    try {
-                        const res = await fetch(`/api/certificate`, {
-                            method: "POST",
-                            headers: {
-                                "Content-type": "application/json"
-                            },
-                            body: JSON.stringify(this.post_certificate)
-                        });
-                        this.logs_certificate.push(await res.json());
-                    } catch(e) {
-                        this.logs_certificate.push(e);
-                    }
-                    this.loading = false;
-                },
-                async search_certificate() {
-                    this.loading = true;
-                    try {
-                        this.certificate = (await (await fetch(`/api/certificate?id=${this.id_certificate}`)).json()).data;
-                    } catch(e) {
-                        this.certificate = null;
-                        console.error(e);
-                    }
-                    this.loading = false;
-                },
-
-                async create_student() {
-                    this.loading = true;
-                    try {
-                        const res = await fetch(`/api/student`, {
-                            method: "POST",
-                            headers: {
-                                "Content-type": "application/json"
-                            },
-                            body: JSON.stringify(this.post_student)
-                        });
-                        this.logs_student.push(await res.json());
-                    } catch(e) {
-                        this.logs_student.push(e);
-                    }
-                    this.loading = false;
-                },
-                async search_student() {
-                    this.loading = true;
-                    try {
-                        this.student = (await (await fetch(`/api/student?id=${this.id_student}`)).json()).data;
-                    } catch(e) {
-                        this.student = null;
-                        console.error(e);
-                    }
-                    this.loading = false;
-                },
-
-                async create_assignment() {
-                    this.loading = true;
-                    try {
-                        const res = await fetch(`/api/assignment`, {
-                            method: "POST",
-                            headers: {
-                                "Content-type": "application/json"
-                            },
-                            body: JSON.stringify(this.post_assignment)
-                        });
-                        this.logs_assignment.push(await res.json());
-                    } catch(e) {
-                        this.logs_assignment.push(e);
-                    }
-                    this.loading = false;
-                },
-            }
+            async created() {
+                this.settings = await (await fetch("./settings.json")).json();
+                this.contract_address = (await (await fetch(`/api/address`)).json()).data;
+            },
         }).mount('#app')
     </script>
     <style>
