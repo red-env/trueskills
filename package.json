@@ -3,8 +3,7 @@
   "version": "0.0.2",
   "description": "",
   "scripts": {
-    "start": "nodemon server.js",
-    "test": "truffle test test/*"
+    "start": "node server.js"
   },
   "author": "Geremia Pompei",
   "license": "MIT",
