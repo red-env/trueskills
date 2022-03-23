@@ -14,13 +14,15 @@ function getContract() {
     return Certificates;
 }
 
+const Certificates = getContract();
+
 module.exports = {
     getAddress() {
         return certificates_artifact.networks[network.network_id].address
     },
     async addStudent(student) {
         student.birthdate = new Date(student.birthdate).getTime();
-        const certificates = await getContract().deployed();
+        const certificates = await Certificates.deployed();
         return await certificates.addStudent(
             student.name,
             student.surname,
@@ -30,7 +32,7 @@ module.exports = {
         );
     },
     async getStudent(id) {
-        const certificates = await getContract().deployed();
+        const certificates = await Certificates.deployed();
         const student = await certificates.students(id);
         return {
           id: student[0],
@@ -42,7 +44,7 @@ module.exports = {
         };
     },
     async addCertificate(certificate) {
-        const certificates = await getContract().deployed();
+        const certificates = await Certificates.deployed();
         return await certificates.addCertificate(
             certificate.title,
             certificate.description,
@@ -50,7 +52,7 @@ module.exports = {
         );
     },
     async getCertificate(id) {
-        const certificates = await getContract().deployed();
+        const certificates = await Certificates.deployed();
         const certificate = await certificates.certificates(id);
         return {
           id: certificate[0],
@@ -62,7 +64,7 @@ module.exports = {
         };
     },
     async addAssignment(assignment) {
-        const certificates = await getContract().deployed();
+        const certificates = await Certificates.deployed();
         return await certificates.addAssignment(
             assignment.student,
             assignment.certificate,
@@ -71,7 +73,7 @@ module.exports = {
         );
     },
     async getAssignment(id) {
-        const certificates = await getContract().deployed();
+        const certificates = await Certificates.deployed();
         const assignment = await certificates.assignments(id);
         const student = await this.getStudent(assignment[1]);
         const certificate = await this.getCertificate(assignment[2]);
