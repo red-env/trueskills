@@ -15,7 +15,10 @@
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                      <a v-for="(setting, key) in settings" :key="key" class="nav-link rounded-sm bg-light" :class="{'border border-primary': (route == setting.menu_path)}" @click="() => route = setting.menu_path">
-                            {{setting.menu_title}}
+                        {{setting.menu_title}}
+                    </a>
+                     <a class="nav-link rounded-sm bg-light" :class="{'border border-primary': (route == 'logs')}" @click="() => route = 'logs'">
+                        LOGS
                     </a>
                     <a v-if="contract_address" class="nav-link" target="_blank" :href="etherscan_url+'address/'+contract_address">etherscan contract</a>
                     <div class="spinner-border" role="status" v-if="loading">
@@ -35,10 +38,16 @@
                         :name="setting.component.name"
                         :path="setting.component.path"
                         :structs="setting.component.structs"
-                        :etherscan_url="etherscan_url"
                         @loading="(flag) => loading=flag"
+                        @logs="(log) => logs.push(log)"
+                        @end="() => route = 'logs'"
                     ></Create>
                 </div>
+            </div>
+            <div v-if="route == 'logs'">
+                <Log :logs="logs"
+                    :etherscan_url="etherscan_url"
+                ></Log>
             </div>
         </div>
     </div>
@@ -65,7 +74,8 @@
         Vue.createApp({
             components: {
                 Search: Vue.defineAsyncComponent( () => loadModule('./components/search.js', options) ),
-                Create: Vue.defineAsyncComponent( () => loadModule('./components/create.js', options) )
+                Create: Vue.defineAsyncComponent( () => loadModule('./components/create.js', options) ),
+                Log: Vue.defineAsyncComponent( () => loadModule('./components/log.js', options) )
             },
             data() {
                 return {
@@ -73,7 +83,8 @@
                     loading: false,
                     etherscan_url: "https://ropsten.etherscan.io/",
                     contract_address: null,
-                    settings: []
+                    settings: [],
+                    logs: []
                 }
             },
             async created() {
