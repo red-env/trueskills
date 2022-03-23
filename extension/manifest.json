@@ -1,0 +1,12 @@
+{
+    "manifest_version": 2,
+    "name": "UniMc button",
+    "version": "1.0",
+    "description": "Aggiunta botton a pagina UniMc.",
+    "content_scripts": [
+        {
+            "matches": ["https://www.unimc.it/*"],
+            "js": ["script.js"]
+        }
+    ]
+}
