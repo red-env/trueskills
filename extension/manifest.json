@@ -2,7 +2,15 @@
     "manifest_version": 2,
     "name": "UniMc button",
     "version": "1.0",
-    "description": "Aggiunta botton a pagina UniMc.",
+    "description": "Aggiunta bottone CERTIFICAZIONE a pagina UniMc.",
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "browser_action": {
+        "default_popup": "popup.html"
+    },
     "content_scripts": [
         {
             "matches": ["https://www.unimc.it/*"],
