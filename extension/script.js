@@ -1,7 +1,7 @@
 
 const data = {
   button_label: "CERTIFICAZIONE",
-  button_url: "https://digital-curriculum-vitae.herokuapp.com/",
+  button_url: "https://dev-digital-cv.herokuapp.com/",
   ethereum_path: chrome.runtime.getURL("icons/ethereum.svg"),
   ethereum_contract_url:
     "https://ropsten.etherscan.io/address/0xc9A63a97b9b86C67373a319A884dDE4226F23115",
