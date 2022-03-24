@@ -79,7 +79,7 @@
             },
             data() {
                 return {
-                    route: "search_certificate",
+                    route: "",
                     loading: false,
                     etherscan_url: "https://ropsten.etherscan.io/",
                     contract_address: null,
@@ -89,6 +89,7 @@
             },
             async created() {
                 this.settings = await (await fetch("./settings.json")).json();
+                this.route = this.settings[0].menu_path;
                 this.contract_address = (await (await fetch(`/api/address`)).json()).data;
             },
         }).mount('#app')

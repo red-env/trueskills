@@ -16,5 +16,8 @@
             "matches": ["https://www.unimc.it/*"],
             "js": ["script.js"]
         }
+    ],
+    "web_accessible_resources": [
+        "icons/*"
     ]
 }

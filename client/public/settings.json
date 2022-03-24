@@ -1,39 +1,5 @@
 [
   {
-    "menu_path": "search_student",
-    "menu_title": "Search Student",
-    "component": {
-      "type": "search",
-      "name": "Student",
-      "path": "student"
-    }
-  },
-  {
-    "menu_path": "create_student",
-    "menu_title": "Create Student",
-    "component": {
-      "type": "create",
-      "name": "Student",
-      "path": "student",
-      "structs": [
-        { "attribute": "name", "type": "text", "title": "Name" },
-        { "attribute": "surname", "type": "text", "title": "Surname" },
-        { "attribute": "birthdate", "type": "date", "title": "Birth Date" },
-        {
-          "attribute": "gender",
-          "type": "select",
-          "title": "Gender",
-          "options": [
-            { "label": "Male", "value": 0 },
-            { "label": "Female", "value": 1 },
-            { "label": "Other", "value": 2 }
-          ]
-        },
-        { "attribute": "cv", "type": "string", "title": "CV" }
-      ]
-    }
-  },
-  {
     "menu_path": "search_certificate",
     "menu_title": "Search Certificate",
     "component": {
@@ -52,7 +18,8 @@
       "structs": [
         { "attribute": "title", "type": "text", "title": "Title" },
         { "attribute": "description", "type": "text", "title": "Description" },
-        { "attribute": "max_vote", "type": "number", "title": "Max Vote" }
+        { "attribute": "max_vote", "type": "number", "title": "Max Vote" },
+        { "attribute": "executor", "type": "string", "title": "Executor" }
       ]
     }
   },
@@ -73,12 +40,8 @@
       "name": "Assignment",
       "path": "assignment",
       "structs": [
-        {
-          "attribute": "certificate",
-          "type": "number",
-          "title": "Certificate Id"
-        },
-        { "attribute": "student", "type": "number", "title": "Student Id" },
+        { "attribute": "certificate", "type": "number", "title": "Certificate Id" },
+        { "attribute": "student", "type": "text", "title": "Student Fiscal Code" },
         { "attribute": "comment", "type": "text", "title": "Comment" },
         { "attribute": "vote", "type": "number", "title": "Vote" }
       ]

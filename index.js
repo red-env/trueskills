@@ -29,8 +29,6 @@ async function handleResponse(res, callback) {
 }
 
 app.get('/api/address', (req, res) => handleResponse(res, () => controller.getAddress()));
-app.post('/api/student', (req, res) => handleResponse(res, () => controller.addStudent(req.body)));
-app.get("/api/student", (req, res) => handleResponse(res, () => controller.getStudent(req.query.id)));
 app.post("/api/certificate", (req, res) => handleResponse(res, () => controller.addCertificate(req.body)));
 app.get("/api/certificate", (req, res)  => handleResponse(res, () => controller.getCertificate(req.query.id)));
 app.post("/api/assignment", (req, res) => handleResponse(res, () => controller.addAssignment(req.body)));

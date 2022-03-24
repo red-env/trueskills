@@ -1,71 +1,50 @@
 const contract = require("truffle-contract");
-const certificates_artifact = require("../smart_contract/build/contracts/Certificates.json");
+const certificates_artifact = require("../smart_contract/build/contracts/DigitalCV.json");
 const truffle_config = require("../smart_contract/truffle-config.js");
 const network = truffle_config.networks.ropsten;
 
 // Configuration
 function getContract() {
     const provider = network.provider();
-    const Certificates = contract(certificates_artifact);
-    Certificates.setProvider(provider);
-    Certificates.defaults({
+    const DigitalCV = contract(certificates_artifact);
+    DigitalCV.setProvider(provider);
+    DigitalCV.defaults({
       from: process.env.ACCOUNT_ADDRESS,
     });
-    return Certificates;
+    return DigitalCV;
 }
 
-const Certificates = getContract();
+const DigitalCV = getContract();
 
 module.exports = {
     getAddress() {
         return certificates_artifact.networks[network.network_id].address
     },
-    async addStudent(student) {
-        student.birthdate = new Date(student.birthdate).getTime();
-        const certificates = await Certificates.deployed();
-        return await certificates.addStudent(
-            student.name,
-            student.surname,
-            student.birthdate,
-            student.gender,
-            student.cv
-        );
-    },
-    async getStudent(id) {
-        const certificates = await Certificates.deployed();
-        const student = await certificates.students(id);
-        return {
-          id: student[0],
-          name: student[1],
-          surname: student[2],
-          birthdate: new Date(Number.parseInt(student[3])).toLocaleDateString(),
-          gender: student[4] == 0 ? "Male" : student[4] == 1 ? "Female" : "Other",
-          __metadata: student,
-        };
-    },
     async addCertificate(certificate) {
-        const certificates = await Certificates.deployed();
-        return await certificates.addCertificate(
-            certificate.title,
-            certificate.description,
-            certificate.max_vote
+        const certificates = await DigitalCV.deployed();
+        return await certificates.createCertificate(
+          certificate.title,
+          certificate.description,
+          certificate.max_vote,
+          certificate.executor
         );
     },
     async getCertificate(id) {
-        const certificates = await Certificates.deployed();
+        const certificates = await DigitalCV.deployed();
         const certificate = await certificates.certificates(id);
         return {
           id: certificate[0],
           title: certificate[1],
             description: certificate[2],
             max_vote: certificate[3],
-          certifier: certificate[4],
+            certifier: certificate[4],
+          executor: certificate[5],
           __metadata: certificate,
         };
     },
     async addAssignment(assignment) {
-        const certificates = await Certificates.deployed();
-        return await certificates.addAssignment(
+        const certificates = await DigitalCV.deployed();
+        return await certificates.createAssignment(
             assignment.student,
             assignment.certificate,
             assignment.comment,
@@ -73,13 +52,12 @@ module.exports = {
         );
     },
     async getAssignment(id) {
-        const certificates = await Certificates.deployed();
+        const certificates = await DigitalCV.deployed();
         const assignment = await certificates.assignments(id);
-        const student = await this.getStudent(assignment[1]);
         const certificate = await this.getCertificate(assignment[2]);
         return {
           id: assignment[0],
-          student,
+          student: assignment[1],
           certificate,
           comment: assignment[3],
           vote: assignment[4],
