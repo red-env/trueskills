@@ -1,26 +1,16 @@
 const mongoose = require("mongoose");
 
 module.exports = mongoose.model(
-  "Certificato",
+  "Blockchain_Type",
   new mongoose.Schema(
     {
-      data: {
-        type: Date,
-        default: new Date(),
-      },
-      titolo: {// titolo di studio
+      nome: {
         type: String,
         required: true,
       },
-      studente: {
+      url_base: {
         type: String,
         required: true,
-      },
-      voto: {
-        type: Number,
-      },
-      commento: {
-        type: String,
       },
     },
     {

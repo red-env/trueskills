@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("./controller.js");
-const f = require("../utility/handler/formatter.js");
+const f = require("../utility/formatter/response_formatter.js");
 
 router.get("/api/certificati", f(controller.searchMany));
 router.get("/api/certificato", f(controller.searchOne));

@@ -7,15 +7,19 @@
     "node": "12.18.3"
   },
   "scripts": {
-    "start": "node server/main.js"
+    "init": "node server/src/init.js",
+    "start": "node server/src/main.js",
+    "test": "node server/test/test.js"
   },
   "author": "Geremia Pompei",
   "license": "MIT",
   "dependencies": {
     "@truffle/hdwallet-provider": "^2.0.4",
     "body-parser": "^1.18.2",
+    "crypto": "^1.0.1",
     "dotenv": "^16.0.0",
     "express": "^4.16.2",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.8",
     "truffle-contract": "^1.1.11",
     "web3": "^0.20.0"

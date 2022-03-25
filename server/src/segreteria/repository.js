@@ -1,13 +1,12 @@
 const Model = require("./model.js");
 
 module.exports = {
-  create: (utente) =>
+  create: (obj) =>
     new Model({
-      password: utente.password,
-      email: utente.email,
-      telefono: utente.telefono,
-      nome: utente.nome,
-      p_iva: utente.p_iva,
+      email: obj.email,
+      telefono: obj.telefono,
+      nome: obj.nome,
+      p_iva: obj.p_iva,
     }).save(),
   findOneById: (id) => Model.findById(id),
   findManyByName: async (nome) => {

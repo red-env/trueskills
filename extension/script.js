@@ -1,10 +1,11 @@
 
+const address = "0xb5CBC70Eb4CD330adB823e9687F6883EcaC3607F";
+
 const data = {
   button_label: "CERTIFICAZIONE",
   button_url: "https://dev-digital-cv.herokuapp.com/",
   ethereum_path: chrome.runtime.getURL("icons/ethereum.svg"),
-  ethereum_contract_url:
-    "https://ropsten.etherscan.io/address/0xc9A63a97b9b86C67373a319A884dDE4226F23115",
+  ethereum_contract_url: "https://ropsten.etherscan.io/address/" + address,
 };
 
 const navbar = document.getElementsByClassName("rd-navbar-nav")[0];

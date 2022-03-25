@@ -1,32 +1,35 @@
 const mongoose = require("mongoose");
 
 module.exports = mongoose.model(
-  "Segreteria",
+  "Certificato",
   new mongoose.Schema(
     {
-      email: {
+      data: {
+        type: Date,
+        default: new Date(),
+      },
+      titolo: {
+        // titolo di studio
         type: String,
         required: true,
       },
-      telefono: {
+      studente: {
         type: String,
         required: true,
       },
-      password: {
+      voto: {
+        type: Number,
+      },
+      commento: {
+        type: String,
+      },
+      tx_hash: {
         type: String,
         required: true,
       },
-      nome: {
+      tx_url: {
         type: String,
         required: true,
-      },
-      p_iva: {
-        type: String,
-        required: true,
-      },
-      titoli: {
-        type: Array,
-        default: [],
       },
     },
     {

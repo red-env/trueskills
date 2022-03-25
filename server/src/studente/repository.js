@@ -1,13 +1,13 @@
 const Model = require("./model.js");
 
 module.exports = {
-  create: (utente) =>
+  create: (obj) =>
     new Model({
-      email: utente.email,
-      telefono: utente.telefono,
-      nome: utente.nome,
-      cognome: utente.cognome,
-      cf: utente.cf,
+      email: obj.email,
+      telefono: obj.telefono,
+      nome: obj.nome,
+      cognome: obj.cognome,
+      cf: obj.cf,
     }).save(),
   findOneById: (id) => Model.findById(id),
   findManyByName: async (nome) => {

@@ -2,13 +2,15 @@ require("dotenv").config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
-
 const app = express();
 const port = process.env.PORT || 80;
 
 app.use('/', express.static('client/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(require("./utente/router.js"));
+app.use(require("./utility/middleware/jwt_verify.js"));
 
 // Add routers
 app.use(require("./studente/router.js"));
