@@ -14,6 +14,7 @@ truffle deploy --network ropsten --reset
 ## Start server
 ```
 npm install
+npm run init
 npm start
 ```
 
