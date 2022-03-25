@@ -1,5 +1,7 @@
 node_modules
+mongodb
 package-lock.json
 .env
 */.env
 *.rest
+.idea
