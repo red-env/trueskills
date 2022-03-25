@@ -5,7 +5,5 @@ const f = require("../utility/formatter/response_formatter.js");
 
 router.get("/api/studenti", f(controller.searchMany));
 router.get("/api/studente", f(controller.searchOne));
-router.post("/api/studente", f(controller.create));
-router.delete("/api/studenti", f(controller.delete));
 
 module.exports = router;

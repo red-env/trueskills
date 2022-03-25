@@ -1,7 +1,9 @@
-module.exports = (titolo, certificato, studente, segreteria) => {
-  let text = `L'ente ${segreteria.nome}(${segreteria.p_iva}) assegna allo studente ${studente.nome} ${studente.cognome}(${studente.cf}) il titolo ${titolo.titolo}`;
-  if (titolo.descrizione) text += ` (${titolo.descrizione})`;
-  if (certificato.voto && titolo.max_voto) text += ` con votazione ${certificato.voto}/${titolo.max_voto}`;
+module.exports = (certificato) => {
+  let text = `L'ente ${certificato.titolo.segreteria.nome}(${certificato.titolo.segreteria.p_iva}) assegna allo studente ${certificato.studente.nome} ${certificato.studente.cognome}(${certificato.studente.cf}) il titolo ${certificato.titolo.titolo}`;
+  if (certificato.titolo.descrizione)
+    text += ` (${certificato.titolo.descrizione})`;
+  if (certificato.voto && certificato.titolo.max_voto)
+    text += ` con votazione ${certificato.voto}/${certificato.titolo.max_voto}`;
   if (certificato.commento)
     text += ` (${certificato.commento})`;
   return text;

@@ -1,5 +1,6 @@
 const jsonwebtoken = require("jsonwebtoken");
 const f = require("../formatter/response_formatter.js");
+const Exception = require("../exception/exception.js");
 
 module.exports = f((req) => {
   const authorization = req.headers["authorization"];
@@ -8,7 +9,10 @@ module.exports = f((req) => {
       authorization.split(" ")[1],
       process.env.JWT_SECRET
     );
-    if (data) return data;
+    if (data) {
+      req.auth = data;
+      return undefined;
+    }
   }
-  throw "Non autorizzato";
+  throw new Exception("ACCESSO_NON_AUTORIZZATO", 401);
 });

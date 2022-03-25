@@ -7,8 +7,8 @@ module.exports = {
       studente: obj.studente,
       voto: obj.voto,
       commento: obj.commento,
-      tx_hash: tx_hash,
-      tx_url: tx_url
+      tx_hash: obj.tx_hash,
+      tx_url: obj.tx_url,
     }).save(),
   findOneById: (id) => Model.findById(id),
   findManyByName: async (nome) => {
@@ -17,5 +17,6 @@ module.exports = {
       $or: [{ commento: regexp }],
     });
   },
+  findManyByStudente: (studente) => Model.find({ studente }),
   deleteAll: () => Model.deleteMany({}),
 };

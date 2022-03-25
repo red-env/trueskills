@@ -25,26 +25,36 @@ async function initializer() {
   });
   console.log("Creato BLOCKCHAIN_TYPE: ", blockchain_type._id);
 
-  const studente = await controller_studente.create({
-    body: {
-      email: "gemipampi@gmail.com",
-      telefono: "3668728922",
-      nome: "Geremia",
-      cognome: "Pompei",
-      cf: "PMPGRM99E07E783G",
-    },
-  });
-  console.log("Creato STUDENTE: ", studente._id);
-
-  const segreteria = await controller_segreteria.create({
-    body: {
+  const body_studente = {
+    username: "segreteria",
+    password: "password",
+    ruolo_tipo: "SEGRETERIA",
+    ruolo: {
       email: "ateneo@pec.unimc.it",
       telefono: "800224071",
       nome: "UNIMC",
       p_iva: "00177050432",
     },
-  });
-  console.log("Creata SEGRETERIA: ", segreteria._id);
+  };
+  console.log("Creazione STUDENTE: ", body_studente.username, body_studente.password);
+  const studente = await controller_utente.create({ body: body_studente });
+  console.log("Creato STUDENTE: ", studente._id);
+
+  const body_segreteria = {
+    username: "studente",
+    password: "password",
+    ruolo_tipo: "STUDENTE",
+    ruolo: {
+      email: "gemipampi@gmail.com",
+      telefono: "3663452479",
+      nome: "Geremia",
+      cognome: "Pompei",
+      cf: "PMPGRM99E07E783G",
+    },
+  };
+  console.log("Creazione SEGRETERIA: ", body_segreteria.username, body_segreteria.password);
+  const segreteria = await controller_utente.create({ body: body_segreteria });
+  console.log("Creata SEGRETERIA: ",  segreteria._id);
 }
 
 async function main() {

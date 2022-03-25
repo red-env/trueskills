@@ -9,6 +9,7 @@ app.use('/', express.static('client/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(require("./blockchain_type/router.js"));
 app.use(require("./utente/router.js"));
 app.use(require("./utility/middleware/jwt_verify.js"));
 

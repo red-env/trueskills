@@ -22,8 +22,8 @@ module.exports = {
   getAddress() {
     return certificates_artifact.networks[network.network_id].address;
   },
-  async signCertificato(titolo, certificato, studente, segreteria) {
-    const text = f_contract(titolo, certificato, studente, segreteria);
+  async signCertificato(certificato) {
+    const text = f_contract(certificato);
     const certificates = await DigitalCV.deployed();
     return await certificates.createCertificate(text);
   },

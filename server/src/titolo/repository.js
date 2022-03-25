@@ -15,6 +15,7 @@ module.exports = {
       $or: [{ titolo: regexp }, { descrizione: regexp }],
     });
   },
+  findManyBySegreteria: (segreteria) => Model.find({ segreteria }),
   addCertificato: (id, certificato) =>
     Model.updateOne({ _id: id }, { $push: { certificati: certificato } }),
   deleteAll: () => Model.deleteMany({}),
