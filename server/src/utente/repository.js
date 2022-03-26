@@ -1,4 +1,5 @@
 const Model = require("./model.js");
+const Exception = require("../utility/exception/exception.js");
 
 module.exports = {
   create: (obj) =>
@@ -12,7 +13,11 @@ module.exports = {
     with_password
       ? Model.findOne({ username }).select("+password").exec()
       : Model.findOne({ username }),
-  findOneById: (id) => Model.findById(id),
+  findOneById: async (id) => {
+    const model = await Model.findById(id);
+    if(model) return model;
+    throw Exception.UTENTE_NON_ESISTENTE;
+  },
   findManyByName: async (nome) => {
     const regexp = new RegExp(nome || "");
     return await Model.find({

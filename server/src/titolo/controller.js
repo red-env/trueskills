@@ -6,11 +6,11 @@ const Exception = require("../utility/exception/exception.js");
 
 async function formatTitolo(titolo) {
   titolo = titolo.toObject();
-  titolo.segreteria = (await repo_segreteria.findOneById(titolo.segreteria)).toObject();;
+  titolo.segreteria = (await repo_segreteria.findOneById(titolo.segreteria)).toObject();
   titolo.segreteria.titoli = undefined;
   for (const [index_c, c] of titolo.certificati.entries()) {
-    titolo.certificati[index_c] = (await repo_certificato.findOneById(c)).toObject();;
-    c.studente = (await repo_studente.findOneById(c.studente)).toObject();;
+    titolo.certificati[index_c] = (await repo_certificato.findOneById(c)).toObject();
+    c.studente = (await repo_studente.findOneById(c.studente)).toObject();
   }
   return titolo;
 }

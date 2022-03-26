@@ -1,4 +1,5 @@
 const Model = require("./model.js");
+const Exception = require("../utility/exception/exception.js");
 
 module.exports = {
   create: (obj, tx_hash, tx_url) =>
@@ -10,7 +11,11 @@ module.exports = {
       tx_hash: obj.tx_hash,
       tx_url: obj.tx_url,
     }).save(),
-  findOneById: (id) => Model.findById(id),
+    findOneById: async (id) => {
+      const model = await Model.findById(id);
+      if(model) return model;
+      throw Exception.CERTIFICATO_NON_ESISTENTE;
+    },
   findManyQuery: async (query) => {
     const filter = [];
     if (query.start) filter.push({data: {$gte: query.start}});

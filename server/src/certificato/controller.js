@@ -35,7 +35,7 @@ module.exports = {
         req_certificato.voto > req_certificato.titolo.max_voto)
     )
       throw Exception.VOTO_NON_VALIDO;
-    if(req_certificato.titolo.segreteria._id !== req.auth.ruolo._id)
+    if(req_certificato.titolo.segreteria._id != req.auth.ruolo._id)
       throw Exception.TITOLO_NON_ESISTENTE;
     const res = await contract_digital_cv.signCertificato(req_certificato);
     req.body.tx_hash = res.tx;

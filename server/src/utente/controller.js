@@ -13,8 +13,7 @@ module.exports = {
     if (!req_utente.username || !req_utente.password) throw Exception.CAMPI_AUTENTICAZIONE_MANCANTI;
     const password = encrypt(req_utente.password);
     const utente = await repository.findOneByUsername(req_utente.username, true);
-    if (!utente || utente.ruolo_tipo !== req_utente.ruolo) throw Exception.UTENTE_NON_ESISTENTE;
-    if (!utente) throw Exception.UTENTE_NON_ESISTENTE;
+    if (utente.ruolo_tipo !== req_utente.ruolo) throw Exception.UTENTE_NON_ESISTENTE;
     if (utente.password === password) {
       utente.password = undefined;
       let ruolo = {};

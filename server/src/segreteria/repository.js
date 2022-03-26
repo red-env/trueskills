@@ -1,4 +1,5 @@
 const Model = require("./model.js");
+const Exception = require("../utility/exception/exception.js");
 
 module.exports = {
   create: (obj) =>
@@ -9,7 +10,11 @@ module.exports = {
       p_iva: obj.p_iva,
       stemma_url: obj.stemma_url
     }).save(),
-  findOneById: (id) => Model.findById(id),
+    findOneById: async (id) => {
+      const model = await Model.findById(id);
+      if(model) return model;
+      throw Exception.SEGRETERIA_NON_ESISTENTE;
+    },
   findManyByQuery: async (query) => {
       const filter = [];
       if (query.nome) filter.push({nome: new RegExp(query.nome)});

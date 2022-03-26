@@ -8,10 +8,10 @@ const port = process.env.PORT || 80;
 app.use("/", express.static('client/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-app.all("/api/*", require("./blockchain_type/router.js"));
+app.use(require("./utility/middleware/jwt_retrieve_auth"));
 
 // Add routers
+app.use(require("./blockchain_type/router.js"));
 app.use(require("./utente/router.js"));
 app.use(require("./certificato/router.js"));
 app.use(require("./studente/router.js"));

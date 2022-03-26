@@ -15,6 +15,8 @@ module.exports = (callback) => async (req, res, next) => {
     message.status = false;
     message.result = e.message || e;
     if(e.code) message.code = e.code;
+    if(process.env.DEV_MODE == "true")
+      throw e.message || e;
   }
   console.log(
     new Date().toLocaleDateString(),
