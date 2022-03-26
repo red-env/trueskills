@@ -10,11 +10,11 @@ module.exports = {
 
   async login(req) {
     const req_utente = req.body;
-    if (!req_utente.username || !req_utente.password) throw new Exception("CAMPI_AUTENTICAZIONE_MANCANTI");
+    if (!req_utente.username || !req_utente.password) throw Exception.CAMPI_AUTENTICAZIONE_MANCANTI;
     const password = encrypt(req_utente.password);
     const utente = await repository.findOneByUsername(req_utente.username, true);
-    if (utente.ruolo_tipo !== req_utente.ruolo) throw new Exception("UTENTE_NON_ESISTENTE");
-    if (!utente) throw new Exception("UTENTE_NON_ESISTENTE");
+    if (!utente || utente.ruolo_tipo !== req_utente.ruolo) throw Exception.UTENTE_NON_ESISTENTE;
+    if (!utente) throw Exception.UTENTE_NON_ESISTENTE;
     if (utente.password === password) {
       utente.password = undefined;
       let ruolo = {};
@@ -26,7 +26,7 @@ module.exports = {
       const jwt = jsonwebtoken.sign({ utente, ruolo }, process.env.JWT_SECRET);
       return jwt;
     } else {
-      throw new Exception("PASSWORD_ERRATA");
+      throw Exception.PASSWORD_ERRATA;
     }
   },
 
@@ -40,7 +40,7 @@ module.exports = {
       req_utente.ruolo_id = (await repo_studente.create(req_utente.ruolo))._id;
     }
     const utente = await repository.findOneByUsername(req_utente.username);
-    if (utente) throw new Exception("UTENTE_GIA_ESISTENTE");
+    if (utente) throw Exception.UTENTE_GIA_ESISTENTE;
     req_utente.password = encrypt(req_utente.password);
     const out_utente = await repository.create(req_utente);
     out_utente.password = undefined;

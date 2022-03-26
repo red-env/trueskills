@@ -5,5 +5,5 @@ const Exception = require("../exception/exception.js");
 
 module.exports = (ruolo) => f((req) => {
     if (req.auth.utente.ruolo_tipo === ruolo) return undefined;
-    throw new Exception("RUOLO_NON_AUTORIZZATO");
+    throw Exception.RUOLO_NON_AUTORIZZATO;
 });

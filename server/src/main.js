@@ -22,7 +22,6 @@ mongoose
   .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: process.env.MONGODB_DBNAME,
   })
   .then((res) => {
     console.log("Connected to db!");

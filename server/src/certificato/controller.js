@@ -34,7 +34,9 @@ module.exports = {
         req_certificato.voto <= 0 ||
         req_certificato.voto > req_certificato.titolo.max_voto)
     )
-      throw new Exception("VOTO_NON_VALIDO");
+      throw Exception.VOTO_NON_VALIDO;
+    if(req_certificato.titolo.segreteria._id !== req.auth.ruolo._id)
+      throw Exception.TITOLO_NON_ESISTENTE;
     const res = await contract_digital_cv.signCertificato(req_certificato);
     req.body.tx_hash = res.tx;
     req.body.tx_url = await f_url_tx(res.tx, req_certificato.blockchain_type);
@@ -44,13 +46,13 @@ module.exports = {
       certificato._id
     );
     if (update_studente.modifiedCount <= 0)
-      throw new Exception("STUDENTE_NON_ESISTENTE");
+      throw Exception.STUDENTE_NON_ESISTENTE;
     const update_titolo = await repo_titolo.addCertificato(
       certificato.titolo,
       certificato._id
     );
     if (update_titolo.modifiedCount <= 0)
-      throw new Exception("TITOLO_NON_ESISTENTE");
+      throw Exception.TITOLO_NON_ESISTENTE;
     return await formatCertificato(certificato);
   },
   async searchMany(req) {

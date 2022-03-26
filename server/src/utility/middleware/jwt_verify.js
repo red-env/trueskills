@@ -14,5 +14,5 @@ module.exports = f((req) => {
       return undefined;
     }
   }
-  throw new Exception("ACCESSO_NON_AUTORIZZATO", 401);
+  throw Exception.ACCESSO_NON_AUTORIZZATO;
 });

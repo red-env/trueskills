@@ -1,5 +1,3 @@
-const dict_eccezioni = require("../dictionary/eccezioni.json");
-
 module.exports = (callback) => async (req, res, next) => {
   const message = {
     status: false,
@@ -15,8 +13,8 @@ module.exports = (callback) => async (req, res, next) => {
     message.result = data;
   } catch (e) {
     message.status = false;
-    message.result = dict_eccezioni[e.message] || e.message || e;
-    message.code = e.code;
+    message.result = e.message || e;
+    if(e.code) message.code = e.code;
   }
   console.log(
     new Date().toLocaleDateString(),

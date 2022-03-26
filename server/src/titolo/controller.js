@@ -21,13 +21,13 @@ module.exports = {
     req_titolo.segreteria = req.auth.ruolo._id;
     const titolo = await repo_titolo.create(req_titolo);
     if (titolo.max_voto === 0 || titolo.max_voto < 0)
-      throw new Exception("MASSIMO_VOTO_NON_VALIDO");
+      throw Exception.MASSIMO_VOTO_NON_VALIDO;
     const update_segreteria = await repo_segreteria.addTitolo(
       req.auth.ruolo._id,
       titolo._id
     );
     if (update_segreteria.modifiedCount <= 0)
-      throw new Exception("SEGRETERIA_NON_ESISTENTE");
+      throw Exception.SEGRETERIA_NON_ESISTENTE;
     return await formatTitolo(titolo);
   },
   async searchMany(req) {

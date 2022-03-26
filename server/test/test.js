@@ -87,10 +87,9 @@ async function main() {
 }
 
 mongoose
-  .connect(process.env.MONGODB_URL, {
+  .connect(process.env.MONGODB_URL_TEST, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: process.env.MONGODB_DBNAME_TEST,
   })
   .then((res) => {
     console.log("Connected to db!");
