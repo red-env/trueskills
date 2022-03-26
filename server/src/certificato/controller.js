@@ -8,8 +8,8 @@ const generate_pdf_certificato = require("../utility/pdf/generate_pdf_certificat
 const ruoli = require("../utility/constants/ruoli.json");
 const Exception = require("../utility/exception/exception.js");
 
-async function formatCertificato(certificato) {
-  certificato = certificato.toObject();
+async function formatCertificato(certificato, flag=true) {
+  if(flag) certificato = certificato.toObject();
   certificato.studente = (
     await repo_studente.findOneById(certificato.studente)
   ).toObject();
@@ -25,7 +25,7 @@ async function formatCertificato(certificato) {
 module.exports = {
   async create(req) {
     const req_certificato = await formatCertificato(
-      Object.assign({}, req.body)
+      Object.assign({}, req.body), false
     );
     if (
       req_certificato.titolo &&
