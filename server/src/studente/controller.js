@@ -4,10 +4,11 @@ const repo_certificato = require("../certificato/repository.js");
 const repo_studente = require("../studente/repository.js");
 
 async function formatStudente(studente) {
+  studente = studente.toObject();
   for (const [index_c, c] of studente.certificati.entries()) {
-    studente.certificati[index_c] = await repo_certificato.findOneById(c);
-    c.titolo = await repo_titolo.findOneById(c.titolo);
-    c.titolo.certificato.segreteria = await repo_segreteria.findOneById(c.titolo.certificato.segreteria);
+    studente.certificati[index_c] = (await repo_certificato.findOneById(c)).toObject();;
+    c.titolo = (await repo_titolo.findOneById(c.titolo)).toObject();;
+    c.titolo.certificato.segreteria = (await repo_segreteria.findOneById(c.titolo.certificato.segreteria)).toObject();;
   }
   return studente;
 }
@@ -17,7 +18,7 @@ module.exports = {
     return await formatStudente(await repo_studente.create(req.body));
   },
   async searchMany(req) {
-    const studenti = await repo_studente.findManyByName(req.query.nome);
+    const studenti = await repo_studente.findManyByQuery(req.query);
     for (const [i, studente] of studenti.entries())
       studenti[i] = await formatStudente(studente);
     return studenti;

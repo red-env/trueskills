@@ -10,8 +10,10 @@ module.exports = {
 
   async login(req) {
     const req_utente = req.body;
+    if (!req_utente.username || !req_utente.password) throw new Exception("CAMPI_AUTENTICAZIONE_MANCANTI");
     const password = encrypt(req_utente.password);
     const utente = await repository.findOneByUsername(req_utente.username, true);
+    if (utente.ruolo_tipo !== req_utente.ruolo) throw new Exception("UTENTE_NON_ESISTENTE");
     if (!utente) throw new Exception("UTENTE_NON_ESISTENTE");
     if (utente.password === password) {
       utente.password = undefined;

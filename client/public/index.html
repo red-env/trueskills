@@ -1,108 +1,23 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Digital CV</title>
     <script src="https://unpkg.com/vue@3"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue3-sfc-loader/dist/vue3-sfc-loader.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
-<body>
-    <div id="app">
-        <div class="p-4">
-            <header>
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                     <a v-for="(setting, key) in settings" :key="key" class="nav-link rounded-sm bg-light" :class="{'border border-primary': (route == setting.menu_path)}" @click="() => route = setting.menu_path">
-                        {{setting.menu_title}}
-                    </a>
-                     <a class="nav-link rounded-sm bg-light" :class="{'border border-primary': (route == 'logs')}" @click="() => route = 'logs'">
-                        LOGS
-                    </a>
-                    <a v-if="contract_address" class="nav-link" target="_blank" :href="etherscan_url+'address/'+contract_address">etherscan contract</a>
-                    <div class="spinner-border" role="status" v-if="loading">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                </nav>
-            </header>
-
-            <div v-for="(setting, key) in settings" :key="key">
-                <div v-if="route == setting.menu_path">
-                    <Search v-if="setting.component.type == 'search'"
-                        :name="setting.component.name"
-                        :path="setting.component.path"
-                        @loading="(flag) => loading=flag"
-                    ></Search>
-                    <Create v-if="setting.component.type == 'create'"
-                        :name="setting.component.name"
-                        :path="setting.component.path"
-                        :structs="setting.component.structs"
-                        @loading="(flag) => loading=flag"
-                        @logs="(log) => logs.push(log)"
-                        @end="() => route = 'logs'"
-                    ></Create>
-                </div>
-            </div>
-            <div v-if="route == 'logs'">
-                <Log :logs="logs"
-                    :etherscan_url="etherscan_url"
-                ></Log>
-            </div>
-        </div>
-    </div>
-    <script>
-        const { loadModule } = window['vue3-sfc-loader'];
-        const options = {
-            moduleCache: {
-                vue: Vue
-            },
-            async getFile(url) {
-                const res = await fetch(url);
-                if ( !res.ok )
-                    throw Object.assign(new Error(res.statusText + ' ' + url), { res });
-                return {
-                    getContentData: asBinary => asBinary ? res.arrayBuffer() : res.text(),
-                }
-            },
-            addStyle(textContent) {
-                const style = Object.assign(document.createElement('style'), { textContent });
-                const ref = document.head.getElementsByTagName('style')[0] || null;
-                document.head.insertBefore(style, ref);
-            },
-        }
-        Vue.createApp({
-            components: {
-                Search: Vue.defineAsyncComponent( () => loadModule('./components/search.js', options) ),
-                Create: Vue.defineAsyncComponent( () => loadModule('./components/create.js', options) ),
-                Log: Vue.defineAsyncComponent( () => loadModule('./components/log.js', options) )
-            },
-            data() {
-                return {
-                    route: "",
-                    loading: false,
-                    etherscan_url: "https://ropsten.etherscan.io/",
-                    contract_address: null,
-                    settings: [],
-                    logs: []
-                }
-            },
-            async created() {
-                this.settings = await (await fetch("./settings.json")).json();
-                this.route = this.settings[0].menu_path;
-                this.contract_address = (await (await fetch(`/api/address`)).json()).data;
-            },
-        }).mount('#app')
-    </script>
-    <style>
-        .my-custom-scrollbar {
-            position: relative;
-            height: 800px;
-            overflow: auto;
-        }
-        .table-wrapper-scroll-y {
-            display: block;
-        }
-    </style>
-</body>
+    <script src="https://unpkg.com/vue-router@4.0.5/dist/vue-router.global.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="app.js"></script>
+  </body>
 </html>

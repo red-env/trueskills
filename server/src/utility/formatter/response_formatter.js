@@ -14,7 +14,6 @@ module.exports = (callback) => async (req, res, next) => {
     message.status = true;
     message.result = data;
   } catch (e) {
-    throw e; // TODO DEV
     message.status = false;
     message.result = dict_eccezioni[e.message] || e.message || e;
     message.code = e.code;

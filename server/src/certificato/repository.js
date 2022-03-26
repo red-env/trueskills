@@ -11,11 +11,12 @@ module.exports = {
       tx_url: obj.tx_url,
     }).save(),
   findOneById: (id) => Model.findById(id),
-  findManyByName: async (nome) => {
-    const regexp = new RegExp(nome || "");
-    return await Model.find({
-      $or: [{ commento: regexp }],
-    });
+  findManyQuery: async (query) => {
+    const filter = [];
+    if (query.start) filter.push({data: {$gte: query.start}});
+    if (query.end) filter.push({data: {$lt: query.end}});
+    if (query.commento) filter.push({commento: new RegExp(query.commento)});
+    return await Model.find(filter.length > 0 ? {$and: filter} : {});
   },
   findManyByStudente: (studente) => Model.find({ studente }),
   deleteAll: () => Model.deleteMany({}),

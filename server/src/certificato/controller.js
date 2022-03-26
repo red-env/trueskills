@@ -4,20 +4,29 @@ const repo_titolo = require("../titolo/repository.js");
 const repo_segreteria = require("../segreteria/repository.js");
 const contract_digital_cv = require("../utility/contracts/digital_cv.js");
 const f_url_tx = require("../utility/formatter/url_tx_formatter.js");
+const generate_pdf_certificato = require("../utility/pdf/generate_pdf_certificato.js");
+const ruoli = require("../utility/constants/ruoli.json");
 const Exception = require("../utility/exception/exception.js");
 
 async function formatCertificato(certificato) {
-  certificato.studente = await repo_studente.findOneById(certificato.studente);
-  certificato.titolo = await repo_titolo.findOneById(certificato.titolo);
-  certificato.titolo.segreteria = await repo_segreteria.findOneById(
-    certificato.titolo.segreteria
-  );
+  certificato = certificato.toObject();
+  certificato.studente = (
+    await repo_studente.findOneById(certificato.studente)
+  ).toObject();
+  certificato.titolo = (
+    await repo_titolo.findOneById(certificato.titolo)
+  ).toObject();
+  certificato.titolo.segreteria = (
+    await repo_segreteria.findOneById(certificato.titolo.segreteria)
+  ).toObject();
   return certificato;
 }
 
 module.exports = {
   async create(req) {
-    const req_certificato = await formatCertificato(Object.assign({}, req.body));
+    const req_certificato = await formatCertificato(
+      Object.assign({}, req.body)
+    );
     if (
       req_certificato.titolo &&
       req_certificato.titolo.max_voto > 0 &&
@@ -45,15 +54,23 @@ module.exports = {
     return await formatCertificato(certificato);
   },
   async searchMany(req) {
-    const certificati = await repo_certificato.findManyByName(req.query.nome);
+    const certificati = await repo_certificato.findManyQuery(req.query);
     for (const [i, certificato] of certificati.entries())
       certificati[i] = await formatCertificato(certificato);
     return certificati;
   },
-  async searchManyByStudente(req) {
-    const certificati = await repo_certificato.findManyByStudente(
-      req.auth.ruolo._id
-    );
+  async searchManyPersonali(req) {
+    let certificati = [];
+    if (req.auth.utente.ruolo_tipo === ruoli.STUDENTE)
+      certificati = await repo_certificato.findManyByStudente(
+        req.auth.ruolo._id
+      );
+    else if (req.auth.utente.ruolo_tipo === ruoli.SEGRETERIA) {
+      const titoli = await repo_titolo.findManyBySegreteria(req.auth.ruolo._id);
+      for (const titolo of titoli)
+        for (const certificato_id of titolo.certificati)
+          certificati.push(await repo_certificato.findOneById(certificato_id));
+    }
     for (const [i, certificato] of certificati.entries())
       certificati[i] = await formatCertificato(certificato);
     return certificati;
@@ -62,6 +79,12 @@ module.exports = {
     return await formatCertificato(
       await repo_certificato.findOneById(req.query.id)
     );
+  },
+  async generatePdf(req, res) {
+    const certificato = await formatCertificato(
+      await repo_certificato.findOneById(req.query.id)
+    );
+    await generate_pdf_certificato(certificato, res);
   },
   async delete(req) {
     return await repo_certificato.deleteAll();

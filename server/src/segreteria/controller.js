@@ -4,13 +4,14 @@ const repo_certificato = require("../certificato/repository.js");
 const repo_studente = require("../studente/repository.js");
 
 async function formatSegreteria(segreteria) {
+  segreteria = segreteria.toObject();
   for (const [index_t, titolo] of segreteria.titoli.entries()) {
-    const t = await repo_titolo.findOneById(titolo);
+    const t = await (repo_titolo.findOneById(titolo)).toObject();;
     segreteria.titoli[index_t] = t;
     for (const [index_c, certificato] of t.certificati.entries()) {
-      const c = await repo_certificato.findOneById(certificato);
+      const c = await (repo_certificato.findOneById(certificato)).toObject();;
       t.certificati[index_c] = c;
-      c.studente = await repo_studente.findOneById(c.studente);
+      c.studente = await (repo_studente.findOneById(c.studente)).toObject();;
     }
   }
   return segreteria;
@@ -21,7 +22,7 @@ module.exports = {
     return await formatSegreteria(await repo_segreteria.create(req.body));
   },
   async searchMany(req) {
-    const segreterie = await repo_segreteria.findManyByName(req.query.nome);
+    const segreterie = await repo_segreteria.findManyByQuery(req.query);
     for (const [i, segreteria] of segreterie.entries())
       segreterie[i] = await formatSegreteria(segreteria);
     return segreterie;

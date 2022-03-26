@@ -5,11 +5,12 @@ const repo_studente = require("../studente/repository.js");
 const Exception = require("../utility/exception/exception.js");
 
 async function formatTitolo(titolo) {
-  titolo.segreteria = await repo_segreteria.findOneById(titolo.segreteria);
+  titolo = titolo.toObject();
+  titolo.segreteria = (await repo_segreteria.findOneById(titolo.segreteria)).toObject();;
   titolo.segreteria.titoli = undefined;
   for (const [index_c, c] of titolo.certificati.entries()) {
-    titolo.certificati[index_c] = await repo_certificato.findOneById(c);
-    c.studente = await repo_studente.findOneById(c.studente);
+    titolo.certificati[index_c] = (await repo_certificato.findOneById(c)).toObject();;
+    c.studente = (await repo_studente.findOneById(c.studente)).toObject();;
   }
   return titolo;
 }
@@ -30,7 +31,7 @@ module.exports = {
     return await formatTitolo(titolo);
   },
   async searchMany(req) {
-    const titoli = await repo_titolo.findManyByName(req.query.nome);
+    const titoli = await repo_titolo.findManyByQuery(req.query);
     for (const [i, titolo] of titoli.entries())
       titoli[i] = await formatTitolo(titolo);
     return titoli;

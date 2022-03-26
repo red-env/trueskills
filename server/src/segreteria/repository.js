@@ -7,13 +7,14 @@ module.exports = {
       telefono: obj.telefono,
       nome: obj.nome,
       p_iva: obj.p_iva,
+      stemma_url: obj.stemma_url
     }).save(),
   findOneById: (id) => Model.findById(id),
-  findManyByName: async (nome) => {
-    const regexp = new RegExp(nome || "");
-    return await Model.find({
-      $or: [{ nome: regexp }, { p_iva: regexp }],
-    });
+  findManyByQuery: async (query) => {
+      const filter = [];
+      if (query.nome) filter.push({nome: new RegExp(query.nome)});
+      if (query.p_iva) filter.push({cognome: new RegExp(query.p_iva)});
+      return await Model.find(filter.length > 0 ? {$and: filter} : {});
   },
   addTitolo: (id, titolo) =>
     Model.updateOne(

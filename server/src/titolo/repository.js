@@ -9,11 +9,13 @@ module.exports = {
       segreteria: obj.segreteria,
     }).save(),
   findOneById: (id) => Model.findById(id),
-  findManyByName: async (nome) => {
-    const regexp = new RegExp(nome || "");
-    return await Model.find({
-      $or: [{ titolo: regexp }, { descrizione: regexp }],
-    });
+  findManyByQuery: async (query) => {
+    const filter = [];
+    if (query.start) filter.push({data: {$gte: query.start}});
+    if (query.end) filter.push({data: {$lt: query.end}});
+    if (query.titolo) filter.push({titolo: new RegExp(query.titolo)});
+    if (query.descrizione) filter.push({titolo: new RegExp(query.descrizione)});
+    return await Model.find(filter.length > 0 ? {$and: filter} : {});
   },
   findManyBySegreteria: (segreteria) => Model.find({ segreteria }),
   addCertificato: (id, certificato) =>

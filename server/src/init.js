@@ -34,6 +34,7 @@ async function initializer() {
       telefono: "800224071",
       nome: "UNIMC",
       p_iva: "00177050432",
+      stemma_url: "https://apre.it/wp-content/uploads/2021/03/Universita-degli-Studi-di-Macerata.jpg"
     },
   };
   console.log("Creazione STUDENTE: ", body_studente.username, body_studente.password);

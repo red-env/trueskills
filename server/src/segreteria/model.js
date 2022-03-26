@@ -24,6 +24,9 @@ module.exports = mongoose.model(
         type: Array,
         default: [],
       },
+      stemma_url: {
+        type: String
+      }
     },
     {
       timestamps: true,

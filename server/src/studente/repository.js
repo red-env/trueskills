@@ -10,11 +10,12 @@ module.exports = {
       cf: obj.cf,
     }).save(),
   findOneById: (id) => Model.findById(id),
-  findManyByName: async (nome) => {
-    const regexp = new RegExp(nome || "");
-    return await Model.find({
-      $or: [{ nome: regexp }, { cognome: regexp }, { cf: regexp }],
-    });
+  findManyByQuery: async (query) => {
+      const filter = [];
+      if (query.nome) filter.push({nome: new RegExp(query.nome)});
+      if (query.cognome) filter.push({cognome: new RegExp(query.cognome)});
+      if (query.cf) filter.push({cf: new RegExp(query.cf)});
+      return await Model.find(filter.length > 0 ? {$and: filter} : {});
   },
   addCertificato: (id, certificato) =>
     Model.updateOne({ _id: id }, { $push: { certificati: certificato } }),
