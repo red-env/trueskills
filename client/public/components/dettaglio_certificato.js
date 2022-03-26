@@ -55,15 +55,16 @@ export default {
           }
         });
       },
-      async visualizzaCerificato() {
-        const res = await fetch("api/certificato_pdf?id=" + this.certificato._id, {
-          headers: {
-            "Content-type": "application/pdf",
-            "Authorization": "Bearer "+ localStorage.getItem(STORAGE_KEYS.JWT)
-          }
-        });
-        const objectUrl = URL.createObjectURL(await res.blob());
-        window.open(objectUrl);
+      visualizzaCerificato() {
+        const headers = { "Content-type": "application/pdf"};
+        const jwt = localStorage.getItem(STORAGE_KEYS.JWT);
+        if(jwt)
+          headers.Authorization = "Bearer "+ jwt;
+        const win = window.open();
+        fetch("api/certificato_pdf?id=" + this.certificato._id, {headers}).then(res => res.blob().then(blob => {
+          const objectUrl = URL.createObjectURL(blob);
+          win.location = objectUrl;
+        }));
       },
       accertaAutenticita() {
         window.open(this.certificato.tx_url, '_blank');

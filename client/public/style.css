@@ -18,3 +18,17 @@
   justify-content: center;
   align-items: center;
 }
+
+.menu {
+  height: 100vh;
+}
+.menu_overlay {
+  z-index: 5;
+  position: fixed;
+}
+.menu_open {
+  width: 300px
+}
+.menu_close {
+  width: 50px
+}

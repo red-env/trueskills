@@ -23,19 +23,7 @@ const app = Vue.createApp({
         <Notification :notification="notification"></Notification>
         <div class="container-fluid">
         <div class="row vh-100">
-          <div class="col col-3 bg-dark">
-            <nav class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
-                <div v-for="(route, key) in routes" :key="key">
-                    <router-link v-if="(!utente && route.ruolo=='PUBBLICO') || (utente && route.ruolo && (route.ruolo==utente.utente.ruolo_tipo || route.ruolo.includes(utente.utente.ruolo_tipo)))" 
-                    class="btn nav-link m-2 rounded-sm bg-light" :to="route.path">
-                        {{route.name}}
-                    </router-link>
-                </div>
-                <div v-if="utente" class="btn nav-link m-2 rounded-sm bg-light" @click="logout()">
-                    Logout
-                </div>
-            </nav>
-          </div>
+          <Menu :routes="routes" :utente="utente" @logout="logout"></Menu>
           <div class="col">
             <router-view @fetch="fetch" @login="login" @notify="notify" @loading="setLoading" :utente="utente"></router-view>
           </div>
@@ -45,6 +33,9 @@ const app = Vue.createApp({
         </div>
     `,
   components: {
+    Menu: Vue.defineAsyncComponent(() =>
+      import("./components/utility/menu.js")
+    ),
     Loading: Vue.defineAsyncComponent(() =>
       import("./components/utility/loading.js")
     ),
