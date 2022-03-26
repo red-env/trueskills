@@ -1,8 +1,10 @@
 export default {
     template: /*html*/`
-    <div :class="{menu_close: !isBig}">
-        <div class="bg-dark" :class="{menu_overlay: !isBig}" class="menu">
-            <nav v-if="open || isBig" class="d-flex menu_open flex-column flex-shrink-0 p-3 text-white bg-dark">
+    <div>
+        <div :class="[isBig ? menu_open : menu_close]" class="my-bg-color-primary">
+        </div>
+        <div class="my-bg-color-primary" :class="{menu_overlay: !isBig}" class="menu">
+            <nav v-if="open || isBig" class="d-flex menu_open flex-column flex-shrink-0 p-3 text-white">
                 <div v-for="(route, key) in routes" :key="key">
                     <router-link v-if="(!utente && route.ruolo=='PUBBLICO') || (utente && route.ruolo && (route.ruolo==utente.utente.ruolo_tipo || route.ruolo.includes(utente.utente.ruolo_tipo)))" 
                     class="btn nav-link m-2 rounded-sm bg-light" :to="route.path">
@@ -13,7 +15,7 @@ export default {
                     Logout
                 </div>
             </nav>
-            <nav v-else class="d-flex menu_close flex-column flex-shrink-0 text-white bg-dark">
+            <nav v-else class="d-flex menu_close flex-column flex-shrink-0 text-white">
                 <div ref="hamburger" class="btn p-0 m-0 mt-2" @click="open = true"> 
                     <svg viewBox="0 0 100 80" width="20" height="20" style="fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)">
                         <rect width="100" height="20" rx="8"></rect>

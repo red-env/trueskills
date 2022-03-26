@@ -1,14 +1,15 @@
-const repo_titolo = require("./repository.js");
+const repo_studente = require("./repository.js");
 const repo_segreteria = require("../segreteria/repository.js");
 const repo_certificato = require("../certificato/repository.js");
-const repo_studente = require("../studente/repository.js");
+const repo_titolo = require("../titolo/repository.js");
 
 async function formatStudente(studente) {
   studente = studente.toObject();
   for (const [index_c, c] of studente.certificati.entries()) {
-    studente.certificati[index_c] = (await repo_certificato.findOneById(c)).toObject();;
-    c.titolo = (await repo_titolo.findOneById(c.titolo)).toObject();;
-    c.titolo.certificato.segreteria = (await repo_segreteria.findOneById(c.titolo.certificato.segreteria)).toObject();;
+    const certificato = (await repo_certificato.findOneById(c)).toObject();
+    studente.certificati[index_c] = certificato;
+    certificato.titolo = (await repo_titolo.findOneById(certificato.titolo)).toObject();
+    certificato.titolo.segreteria = (await repo_segreteria.findOneById(certificato.titolo.segreteria)).toObject();
   }
   return studente;
 }

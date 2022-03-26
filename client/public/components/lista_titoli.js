@@ -1,8 +1,9 @@
 export default {
   template: /*html*/ `
   <div>
-    <label class="my-title">Lista Certificati</label>
+  <label class="my-title">Lista Titoli</label>
     <Form 
+    title="Lista Titoli"
       @done="(data) => cerca(data)"
       submit_text="Cerca"
       :structs="[
@@ -10,33 +11,35 @@ export default {
           {type: 'date', title: 'Start', attribute: 'start'},
           {type: 'date', title: 'End', attribute: 'end'},
         ],
-        [{type: 'text', title: 'Commento', attribute: 'commento'}]
+        [
+          {type: 'text', title: 'Titolo', attribute: 'titolo'},
+          {type: 'text', title: 'Descrizione', attribute: 'descrizione'},
+        ]
       ]"
     ></Form>
-    <Button v-if="utente.utente.ruolo_tipo == 'SEGRETERIA'" class="my-btn"@click="() => $router.push('/crea_certificato')">
+    <Button v-if="utente.utente.ruolo_tipo == 'SEGRETERIA'" class="my-btn"@click="() => $router.push('/crea_titolo')">
       Crea Nuovo
     </Button>
     <Table 
         :fields="[
-          {title: 'Id', type: 'text', value: '_id'},
-          {title: 'Studente', type: 'composed', mapping:(data) => data.studente.nome+' '+data.studente.cognome},
-          {title: 'Titolo', type: 'composed', mapping:(data) => data.titolo.titolo},
+          {title: 'Titolo', type: 'text', value: 'titolo'},
+          {title: 'Massimo Voto', type: 'text', value: 'max_voto'},
           {title: 'Data', type: 'text', value: 'data'},
           {title: '', type: 'button_label', value: 'Visualizza', select: select}
         ]"
-        :data="certificati"
+        :data="titoli"
       ></Table>
   </div>`,
-  props: {
-    utente: Object
-  },
   components: {
     Form: Vue.defineAsyncComponent(() => import("./utility/form.js")),
     Table: Vue.defineAsyncComponent(() => import("./utility/table.js")),
   },
+  props: {
+    utente: Object
+  },
   data() {
     return {
-      certificati: [],
+      titoli: [],
     };
   },
   async created() {
@@ -44,12 +47,12 @@ export default {
   },
   methods: {
     async cerca(filter = {}) {
-      this.certificati = await this.rest(
-        "certificati_personali" + this.formatFilter(filter)
+      this.titoli = await this.rest(
+        "titoli_personali" + this.formatFilter(filter)
       );
     },
     async select(obj) {
-      this.$router.push("/dettaglio_certificato/" + obj._id);
+      this.$router.push("/dettaglio_titolo/" + obj._id);
     },
   },
 };

@@ -7,7 +7,7 @@ const f = require("../utility/formatter/response_formatter.js");
 const jwt_verify = require("../utility/middleware/jwt_verify");
 
 router.get("/api/titoli", jwt_verify, f(controller.searchMany));
-router.get("/api/titoli_segreteria", jwt_verify, f(controller.searchManyBySegreteria));
+router.get("/api/titoli_personali", jwt_verify, f(controller.searchManyPersonali));
 router.get("/api/titolo", f(controller.searchOne));
 router.post("/api/titolo", jwt_verify, role_verify(ruoli.SEGRETERIA), f(controller.create));
 

@@ -1,6 +1,7 @@
 export default {
     template: /*html*/ `
     <div class="container">
+    <label class="my-title">Dettaglio Certificato</label>
       <div class="row">
         <Table 
           :fields="[
@@ -12,16 +13,19 @@ export default {
         ></Table>
       </div>
       <div class="row justify-content-center">
-        <button class="row btn btn-primary m-2" @click="visualizzaCerificato()">
+        <button class="row my-btn m-2" @click="visualizzaCerificato()">
           Visualizza Certificato
         </button>
       </div>
       <div class="row justify-content-center">
-        <button class="row btn btn-primary m-2" @click="accertaAutenticita()">
+        <button class="row my-btn m-2" @click="accertaAutenticita()">
           Accerta Autenticità
         </button>
       </div>
     </div>`,
+    props: {
+      utente: Object
+    },
     components: {
       Table: Vue.defineAsyncComponent(() => import("./utility/table.js"))
     },
@@ -39,14 +43,14 @@ export default {
       async cerca() {
         this.certificato = await this.rest("certificato?id=" + this.id);
         const cert = {
-          "ente certificatore": this.certificato.titolo.segreteria.nome,
-          "corso i riferimento": this.certificato.titolo.titolo,
-          "descrizione del corso": this.certificato.titolo.descrizione,
-          "studente": this.certificato.studente.nome + " " + this.certificato.studente.cognome,
-          "note": this.certificato.commento,
-          "voto finale": this.certificato.voto+"/"+this.certificato.titolo.max_voto,
-          "id certificato": this.certificato._id,
-          "hash": this.certificato.tx_hash
+          "Ente Certificatore": this.certificato.titolo.segreteria.nome,
+          "Corso di Riferimento": this.certificato.titolo.titolo,
+          "Descrizione del Corso": this.certificato.titolo.descrizione,
+          "Studente": this.certificato.studente.nome + " " + this.certificato.studente.cognome,
+          "Note": this.certificato.commento,
+          "Voto Finale": this.certificato.voto+"/"+this.certificato.titolo.max_voto,
+          "Id Certificato": this.certificato._id,
+          "Hash": this.certificato.tx_hash
         };
         this.dettaglio = Object.entries(cert).filter(e => e[1] && e[1].length > 0).map(e => {
           return {

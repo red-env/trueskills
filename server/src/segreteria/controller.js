@@ -6,12 +6,12 @@ const repo_studente = require("../studente/repository.js");
 async function formatSegreteria(segreteria) {
   segreteria = segreteria.toObject();
   for (const [index_t, titolo] of segreteria.titoli.entries()) {
-    const t = await (repo_titolo.findOneById(titolo)).toObject();;
+    const t = (await repo_titolo.findOneById(titolo)).toObject();
     segreteria.titoli[index_t] = t;
     for (const [index_c, certificato] of t.certificati.entries()) {
-      const c = await (repo_certificato.findOneById(certificato)).toObject();;
+      const c = (await repo_certificato.findOneById(certificato)).toObject();
       t.certificati[index_c] = c;
-      c.studente = await (repo_studente.findOneById(c.studente)).toObject();;
+      c.studente = (await repo_studente.findOneById(c.studente)).toObject();
     }
   }
   return segreteria;

@@ -20,9 +20,9 @@ module.exports = {
     if (query.end) filter.push({data: {$lt: query.end}});
     if (query.titolo) filter.push({titolo: new RegExp(query.titolo)});
     if (query.descrizione) filter.push({titolo: new RegExp(query.descrizione)});
+    if (query.segreteria) filter.push({segreteria: query.segreteria});
     return await Model.find(filter.length > 0 ? {$and: filter} : {});
   },
-  findManyBySegreteria: (segreteria) => Model.find({ segreteria }),
   addCertificato: (id, certificato) =>
     Model.updateOne({ _id: id }, { $push: { certificati: certificato } }),
   deleteAll: () => Model.deleteMany({}),

@@ -12,8 +12,50 @@ const routes = [
     component: () => import("./components/lista_certificati.js"),
   },
   {
+    path: "/crea_certificato",
+    name: "Crea Certificato",
+    ruolo: "SEGRETERIA",
+    component: () => import("./components/crea_certificato.js"),
+  },
+  {
+    path: "/lista_titoli",
+    name: "Lista Titoli",
+    ruolo: "SEGRETERIA",
+    component: () => import("./components/lista_titoli.js"),
+  },
+  {
+    path: "/crea_titolo",
+    name: "Crea Titolo",
+    ruolo: "SEGRETERIA",
+    component: () => import("./components/crea_titolo.js"),
+  },
+  {
+    path: "/lista_studenti",
+    name: "Lista Studenti",
+    ruolo: "SEGRETERIA",
+    component: () => import("./components/lista_studenti.js"),
+  },
+  {
+    path: "/crea_studente",
+    name: "Crea Studente",
+    ruolo: "SEGRETERIA",
+    component: () => import("./components/crea_studente.js"),
+  },
+  {
     path: "/dettaglio_certificato/:id",
     component: () => import("./components/dettaglio_certificato.js"),
+  },
+  {
+    path: "/dettaglio_studente/:id",
+    component: () => import("./components/dettaglio_studente.js"),
+  },
+  {
+    path: "/dettaglio_titolo/:id",
+    component: () => import("./components/dettaglio_titolo.js"),
+  },
+  {
+    path: "/dettaglio_segreteria/:id",
+    component: () => import("./components/dettaglio_segreteria.js"),
   },
 ];
 
@@ -23,7 +65,7 @@ const app = Vue.createApp({
         <Notification :notification="notification"></Notification>
         <div class="container-fluid">
         <div class="row vh-100">
-          <Menu :routes="routes" :utente="utente" @logout="logout"></Menu>
+          <Menu v-if="utente" :routes="routes" :utente="utente" @logout="logout"></Menu>
           <div class="col">
             <router-view @fetch="fetch" @login="login" @notify="notify" @loading="setLoading" :utente="utente"></router-view>
           </div>
@@ -65,12 +107,6 @@ const app = Vue.createApp({
             })
           ).json()
         ).result;
-        if (this.utente) {
-          const path = this.routes.find(
-            (r) => r.ruolo == this.utente.utente.ruolo_tipo || r.ruolo.includes(this.utente.utente.ruolo_tipo)
-          ).path;
-          if (path) this.$router.push(path);
-        }
       }
     },
     setLoading(flag) {
@@ -83,6 +119,12 @@ const app = Vue.createApp({
       if (jwt) {
         localStorage.setItem(STORAGE_KEYS.JWT, jwt);
         await this.init();
+        if (this.utente) {
+          const path = this.routes.find(
+            (r) => r.ruolo == this.utente.utente.ruolo_tipo || r.ruolo.includes(this.utente.utente.ruolo_tipo)
+          ).path;
+          if (path) this.$router.push(path);
+        }
       }
     },
     logout() {
@@ -114,7 +156,7 @@ app.mixin({
       notifySuccess = false,
       notifyError = true
     ) {
-      this.$emit("setLoading", true);
+      this.$emit("loading", true);
       let result;
       const jwt = localStorage.getItem(STORAGE_KEYS.JWT);
       options.headers = {};
@@ -136,7 +178,7 @@ app.mixin({
       } catch (e) {
         if (notifyError) this.$emit("notify", false, "General Error", e);
       }
-      this.$emit("setLoading", false);
+      this.$emit("loading", false);
       return result;
     },
   },

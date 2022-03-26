@@ -32,3 +32,40 @@
 .menu_close {
   width: 50px
 }
+.my-color-primary {
+  color: #7E0441;
+}
+.my-bg-color-primary {
+  background-color: #7E0441;
+}
+.my-btn {
+  padding: 8px 20px;
+  margin: 8px 20px;
+  cursor: pointer;
+  border: 2px solid white;
+  border-radius: 5px;
+  background-color: #7E0441;
+  text-align: center;
+  color: white;
+  font-weight: 600;
+}
+.my-btn:hover {
+  border-color: #7E0441;
+  background-color: white;
+  color: #7E0441;
+}
+.my-title {
+  padding: 8px 20px;
+  margin: 8px 20px;
+  background-color: #7E0441;
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  justify-self: center;
+}
+.my-form {
+  padding: 8px;
+  margin: 8px;
+  border: 1px solid #7E0441;
+  border-radius: 5px;
+}

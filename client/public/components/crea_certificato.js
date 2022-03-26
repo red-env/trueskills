@@ -1,40 +1,73 @@
 export default {
   template: /*html*/ `
   <div>
+  <label class="my-title">Crea Certificato</label>
     <Form 
-      title="Crea Certificato"
       @done="(data) => crea(data)"
       submit_text="Crea"
-      :structs="[
-        [
-          {type: 'number', title: 'Voto', attribute: 'voto'},
-          {type: 'string', title: 'Note', attribute: 'commento'},
-        ],
-        [
-          {type: 'filter', title: 'Studente', attribute: 'studente', component: 'studente_filter.js'}, 
-          {type: 'filter', title: 'Titolo', attribute: 'titolo', component: 'titolo_filter.js'}
-        ],
-        [
-          {type: 'filter', title: 'Blockchain', attribute: 'blockchain_type', component: 'titolo_filter.js'},
-        ]
-      ]"
+      :structs="structs"
     ></Form>
   </div>`,
+  props: {
+    utente: Object,
+  },
   components: {
     Form: Vue.defineAsyncComponent(() => import("./utility/form.js")),
   },
   data() {
     return {
       certificati: [],
-      studenti: []
+      structs: [],
     };
   },
   async created() {
-    this.studenti = await this.rest("studenti");
+    const blockchain_type = await this.rest("blockchain_types");
+    const studenti = await this.rest("studenti");
+    const titoli = await this.rest("titoli_personali");
+    this.structs = [
+      [
+        { type: "number", title: "Voto", attribute: "voto" },
+        {
+          type: "select",
+          title: "Blockchain",
+          attribute: "blockchain_type",
+          options: blockchain_type.map((b) => {
+            return {
+              label: b.nome,
+              value: b._id,
+            };
+          }),
+        },
+      ],
+      [
+        {
+          type: "select",
+          title: "Titolo",
+          attribute: "titolo",
+          options: titoli.map((t) => {
+            return {
+              label: t.titolo,
+              value: t._id,
+            };
+          }),
+        },
+        {
+          type: "select",
+          title: "Studente",
+          attribute: "studente",
+          options: studenti.map((s) => {
+            return {
+              label: s.cf,
+              value: s._id,
+            };
+          }),
+        },
+      ],
+      [{ type: "textarea", title: "Note", attribute: "commento" }],
+    ];
   },
   methods: {
     async crea(certificato) {
-      //TODO CONTINUARE
       await this.rest(
         "certificato",
         { method: "POST", body: certificato },

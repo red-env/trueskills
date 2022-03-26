@@ -2,7 +2,7 @@ const Model = require("./model.js");
 const Exception = require("../utility/exception/exception.js");
 
 module.exports = {
-  create: (obj, tx_hash, tx_url) =>
+  create: (obj) =>
     new Model({
       titolo: obj.titolo,
       studente: obj.studente,
@@ -21,8 +21,9 @@ module.exports = {
     if (query.start) filter.push({data: {$gte: query.start}});
     if (query.end) filter.push({data: {$lt: query.end}});
     if (query.commento) filter.push({commento: new RegExp(query.commento)});
+    if (query.studente) filter.push({studente: query.studente});
+    if (query.titoli) filter.push({titoli: {$in: query.titoli}})
     return await Model.find(filter.length > 0 ? {$and: filter} : {});
   },
-  findManyByStudente: (studente) => Model.find({ studente }),
   deleteAll: () => Model.deleteMany({}),
 };

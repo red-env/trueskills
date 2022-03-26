@@ -62,17 +62,13 @@ module.exports = {
     return certificati;
   },
   async searchManyPersonali(req) {
-    let certificati = [];
-    if (req.auth.utente.ruolo_tipo === ruoli.STUDENTE)
-      certificati = await repo_certificato.findManyByStudente(
-        req.auth.ruolo._id
-      );
-    else if (req.auth.utente.ruolo_tipo === ruoli.SEGRETERIA) {
-      const titoli = await repo_titolo.findManyBySegreteria(req.auth.ruolo._id);
-      for (const titolo of titoli)
-        for (const certificato_id of titolo.certificati)
-          certificati.push(await repo_certificato.findOneById(certificato_id));
+    if (req.auth.utente.ruolo_tipo === ruoli.STUDENTE) {
+      req.query.studente = req.auth.ruolo._id;
+    } else if (req.auth.utente.ruolo_tipo === ruoli.SEGRETERIA) {
+      const titoli = await repo_titolo.findManyByQuery({query: {segreteria: req.auth.ruolo._id}});
+      req.query.titoli = titoli.map(t => t._id);
     }
+    const certificati = await repo_certificato.findManyQuery(req.query);
     for (const [i, certificato] of certificati.entries())
       certificati[i] = await formatCertificato(certificato);
     return certificati;
