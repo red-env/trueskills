@@ -7,7 +7,7 @@ export default {
             <nav v-if="open || isBig" class="d-flex menu_open flex-column flex-shrink-0 p-3 text-white">
                 <div v-for="(route, key) in routes" :key="key">
                     <router-link v-if="(!utente && route.ruolo=='PUBBLICO') || (utente && route.ruolo && (route.ruolo==utente.utente.ruolo_tipo || route.ruolo.includes(utente.utente.ruolo_tipo)))" 
-                    class="btn nav-link m-2 rounded-sm bg-light" :to="route.path">
+                    class="btn nav-link m-2 rounded-sm bg-light" :to="route.path.split(':')[0]">
                         {{route.name}}
                     </router-link>
                 </div>
