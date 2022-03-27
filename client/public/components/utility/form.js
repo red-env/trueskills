@@ -18,6 +18,7 @@ export default {
                 </option>
               </select>
               <textarea v-else-if="struct.type=='textarea'" :type="struct.type" class="form-control" :id="struct.attribute" v-model="data[struct.attribute]"></textarea>
+              <label v-else-if="struct.type=='label'" :type="struct.type" class="form-control" :id="struct.attribute">{{struct.label}}</label>
               <input v-else :type="struct.type" class="form-control" :id="struct.attribute" v-model="data[struct.attribute]">
             </div>
           </div>
@@ -46,13 +47,21 @@ export default {
   created() {
     this.structs.forEach((struct) =>
       struct.forEach((field) => {
-        if (field.type == "select" && field.options.length > 0)
+        if (field.type == "select" && field.options.length > 0) {
           this.data[field.attribute] = field.options[0].value;
+        }
       })
     );
   },
   methods: {
     async done() {
+      this.structs.forEach((struct) =>
+      struct.forEach((field) => {
+        if (field.value) {
+          this.data[field.attribute] = field.value;
+        }
+      })
+    );
       this.$emit("done", Object.assign({}, this.data));
       Object.keys(this.data).forEach((k) => {
         delete this.data[k];

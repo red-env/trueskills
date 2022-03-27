@@ -20,6 +20,7 @@ export default {
             {title: 'Voto', type: 'text', value: 'voto'},
             {title: 'Commento', type: 'text', value: 'commento'},
             {title: '', type: 'button_label', value: 'Visualizza', select: (obj) => $router.push('/dettaglio_certificato/'+obj._id)},
+            {title: '', type: 'button_label', value: 'Crea Certificato', select: (obj) => $router.push('/crea_certificato/'+id)},
           ]"
           :data="titolo.certificati"
         ></Table>

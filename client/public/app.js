@@ -12,7 +12,7 @@ const routes = [
     component: () => import("./components/lista_certificati.js"),
   },
   {
-    path: "/crea_certificato",
+    path: "/crea_certificato/:id_titolo?",
     name: "Crea Certificato",
     ruolo: "SEGRETERIA",
     component: () => import("./components/crea_certificato.js"),
@@ -56,6 +56,10 @@ const routes = [
   {
     path: "/dettaglio_segreteria/:id",
     component: () => import("./components/dettaglio_segreteria.js"),
+  },
+  {
+    path: "/",
+    component: () => import("./components/dashboard.js"),
   },
 ];
 
@@ -121,7 +125,9 @@ const app = Vue.createApp({
         await this.init();
         if (this.utente) {
           const path = this.routes.find(
-            (r) => r.ruolo == this.utente.utente.ruolo_tipo || r.ruolo.includes(this.utente.utente.ruolo_tipo)
+            (r) =>
+              r.ruolo == this.utente.utente.ruolo_tipo ||
+              r.ruolo.includes(this.utente.utente.ruolo_tipo)
           ).path;
           if (path) this.$router.push(path);
         }

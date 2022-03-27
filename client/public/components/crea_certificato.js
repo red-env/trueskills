@@ -21,9 +21,32 @@ export default {
     };
   },
   async created() {
+    const filtro_titolo = {
+      title: "Titolo",
+      attribute: "titolo",
+    };
     const blockchain_type = await this.rest("blockchain_types");
     const studenti = await this.rest("studenti");
-    const titoli = await this.rest("titoli_personali");
+    const id_titolo = this.$route.params.id_titolo;
+    let titolo = false;
+    if (id_titolo) {
+      titolo = await this.rest("titolo?id=" + id_titolo);
+      if (titolo) {
+          filtro_titolo.type = "label";
+          filtro_titolo.value = id_titolo;
+          filtro_titolo.label = titolo.titolo;
+      }
+    }
+    if (!titolo) {
+      const titoli = await this.rest("titoli_personali");
+      filtro_titolo.type = "select";
+      filtro_titolo.options = titoli.map((t) => {
+          return {
+            label: t.titolo,
+            value: t._id,
+          };
+        });
+    }
     this.structs = [
       [
         { type: "number", title: "Voto", attribute: "voto" },
@@ -40,17 +63,7 @@ export default {
         },
       ],
       [
-        {
-          type: "select",
-          title: "Titolo",
-          attribute: "titolo",
-          options: titoli.map((t) => {
-            return {
-              label: t.titolo,
-              value: t._id,
-            };
-          }),
-        },
+        filtro_titolo,
         {
           type: "select",
           title: "Studente",
