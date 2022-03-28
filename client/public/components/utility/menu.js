@@ -1,6 +1,6 @@
 export default {
     template: /*html*/`
-    <div>
+    
         <div class="my-bg-color-primary" :class="{menu_overlay: !isBig}" class="menu">
             <nav v-if="open || isBig" class="d-flex menu_open flex-column flex-shrink-0 p-3 text-white">
                 <div v-for="(route, key) in routes" :key="key">
@@ -23,7 +23,7 @@ export default {
                 </div>
             </nav>
         </div>
-  </div>
+  
     `,
     props: {
         utente: Object,

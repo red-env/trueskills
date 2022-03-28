@@ -39,21 +39,12 @@ export default {
         {
           title: "Ente Certificatore",
           value: this.certificato.titolo.segreteria.nome,
-          type: "button",
-          select: () =>
-            this.$router.push(
-              "/dettaglio_segreteria/" +
-                this.certificato.titolo.segreteria._id
-            ),
+          type: "text"
         },
         {
           title: "Corso di Riferimento",
           value: this.certificato.titolo.titolo,
-          type: "button",
-          select: () =>
-            this.$router.push(
-              "/dettaglio_titolo/" + this.certificato.titolo._id
-            ),
+          type: "text"
         },
         {
           title: "Descrizione del Corso",
@@ -65,11 +56,7 @@ export default {
             this.certificato.studente.nome +
             " " +
             this.certificato.studente.cognome,
-          type: "button",
-          select: () =>
-            this.$router.push(
-              "/dettaglio_studente/" + this.certificato.studente._id
-            ),
+          type: "text"
         },
         { title: "Note", value: this.certificato.commento },
         {

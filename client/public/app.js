@@ -75,14 +75,16 @@ const app = Vue.createApp({
     <Loading :loading="loading"></Loading>
     <Notification :notification="notification"></Notification>
     <div class="container-fluid">
-        <!--Header></Header-->
+        <Header></Header
         <div class="row vh-100">
-          <Menu v-if="utente" :routes="routes" :utente="utente" @logout="logout"></Menu>
+          
           <div class="col">
-            <router-view @fetch="fetch" @login="login" @notify="notify" @loading="setLoading" :utente="utente"></router-view>
+           <Menu v-if="utente" :routes="routes" :utente="utente" @logout="logout"></Menu>
+           <router-view :class="[utente?'log':'nolog']" @fetch="fetch" @login="login" @notify="notify" @loading="setLoading" :utente="utente"></router-view>
+           <div class="clear"></div>
           </div>
         </div>
-        <!--Footer></Footer-->
+        <Footer></Footer>
       </div>
     </div>
     `,
