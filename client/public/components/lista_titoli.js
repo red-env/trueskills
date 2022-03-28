@@ -3,7 +3,6 @@ export default {
   <div>
   <label class="my-title">Lista Titoli</label>
     <Form 
-    title="Lista Titoli"
       @done="(data) => cerca(data)"
       submit_text="Cerca"
       :structs="[
