@@ -6,6 +6,9 @@ export default {
       <Grid :fields="dettaglio"></Grid>
         <div class="p-4">
         <label class="my-title">Certificati</label>
+        <Button v-if="utente.utente.ruolo_tipo == 'SEGRETERIA'" class="my-btn"@click="() => $router.push('/crea_certificato/'+id)">
+          Crea Nuovo Certificato
+        </Button>
         <Table v-if="titolo.certificati && titolo.certificati.length > 0"
           :fields="[
             {title: 'Id', type: 'text', value: '_id'},
@@ -13,7 +16,6 @@ export default {
             {title: 'Voto', type: 'text', value: 'voto'},
             {title: 'Commento', type: 'text', value: 'commento'},
             {title: '', type: 'button_label', value: 'Visualizza', select: (obj) => $router.push('/dettaglio_certificato/'+obj._id)},
-            {title: '', type: 'button_label', value: 'Crea Certificato', select: (obj) => $router.push('/crea_certificato/'+id)},
           ]"
           :data="titolo.certificati"
         ></Table>
@@ -21,6 +23,9 @@ export default {
       </div>
       
     </div>`,
+    props: {
+      utente: Object
+    },
   components: {
     Grid: Vue.defineAsyncComponent(() => import("./utility/grid.js")),
     Table: Vue.defineAsyncComponent(() => import("./utility/table.js")),

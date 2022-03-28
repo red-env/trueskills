@@ -25,7 +25,8 @@ export default {
           {title: 'Titolo', type: 'text', value: 'titolo'},
           {title: 'Massimo Voto', type: 'text', value: 'max_voto'},
           {title: 'Data', type: 'date', value: 'data'},
-          {title: '', type: 'button_label', value: 'Visualizza', select: select}
+          {title: '', type: 'button_label', value: 'Visualizza', select: select},
+          {title: '', type: 'button_label', value: 'Crea Certificato', select: (obj) => $router.push('/crea_certificato/'+obj._id)},
         ]"
         :data="titoli"
       ></Table>
