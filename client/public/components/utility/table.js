@@ -13,12 +13,13 @@ export default {
                         </thead>
                         <tbody>
                             <tr v-for="(obj, o) in data" :key="o">
-                                <th scope="col" v-for="(field, k) in fields" :key="k">
+                                <td scope="col" v-for="(field, k) in fields" :key="k">
                                     <div v-if="field.type=='composed'">{{field.mapping(obj)}}</div>
                                     <a v-else-if="field.type=='url'" target="_blank" :href="obj[field.value]">{{obj.label}}</a>
                                     <div v-else-if="field.type=='text'">{{obj[field.value]}}</div>
-                                    <div v-else-if="field.type=='button'" class="btn" @click="field.select(obj)">{{obj[field.value]}}</div>
-                                    <div v-else-if="field.type=='button_label'" class="btn" @click="field.select(obj)">{{field.value}}</div>
+                                    <div v-else-if="field.type=='date'">{{new Date(obj[field.value]).toLocaleDateString()}}</div>
+                                    <div v-else-if="field.type=='button'" class="my-btn" @click="field.select(obj)">{{obj[field.value]}}</div>
+                                    <div v-else-if="field.type=='button_label'" class="my-btn" @click="field.select(obj)">{{field.value}}</div>
                                     <div v-else>{{field.value}}</div>
                                 </td>
                             </tr>

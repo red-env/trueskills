@@ -23,6 +23,7 @@ export default {
           {title: 'Email', type: 'text', value: 'email'},
           {title: 'Telefono', type: 'text', value: 'telefono'},
           {title: 'Codice Fiscale', type: 'text', value: 'cf'},
+          {title: '', type: 'button_label', value: 'Visualizza', select: select}
         ]"
         :data="studenti"
       ></Table>
@@ -47,6 +48,9 @@ export default {
       this.studenti = await this.rest(
         "studenti" + this.formatFilter(filter)
       );
+    },
+    async select(obj) {
+      this.$router.push("/dettaglio_studente/" + obj._id);
     },
   },
 };

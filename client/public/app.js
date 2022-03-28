@@ -42,6 +42,12 @@ const routes = [
     component: () => import("./components/crea_studente.js"),
   },
   {
+    path: "/impostazioni_utente",
+    name: "Impostazioni",
+    ruolo: ["SEGRETERIA", "STUDENTE"],
+    component: () => import("./components/impostazioni_utente.js"),
+  },
+  {
     path: "/dettaglio_certificato/:id",
     component: () => import("./components/dettaglio_certificato.js"),
   },
@@ -65,18 +71,20 @@ const routes = [
 
 const app = Vue.createApp({
   template: /*html*/ `
-        <Loading :loading="loading"></Loading>
-        <Notification :notification="notification"></Notification>
-        <div class="container-fluid">
+  <div>
+    <Loading :loading="loading"></Loading>
+    <Notification :notification="notification"></Notification>
+    <div class="container-fluid">
+        <!--Header></Header-->
         <div class="row vh-100">
           <Menu v-if="utente" :routes="routes" :utente="utente" @logout="logout"></Menu>
           <div class="col">
             <router-view @fetch="fetch" @login="login" @notify="notify" @loading="setLoading" :utente="utente"></router-view>
           </div>
         </div>
-        <div class="row">
-          <footer></footer>
-        </div>
+        <!--Footer></Footer-->
+      </div>
+    </div>
     `,
   components: {
     Menu: Vue.defineAsyncComponent(() =>
@@ -87,6 +95,12 @@ const app = Vue.createApp({
     ),
     Notification: Vue.defineAsyncComponent(() =>
       import("./components/utility/notification.js")
+    ),
+    Header: Vue.defineAsyncComponent(() =>
+      import("./components/utility/header.js")
+    ),
+    Footer: Vue.defineAsyncComponent(() =>
+      import("./components/utility/footer.js")
     ),
   },
   data() {

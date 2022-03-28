@@ -3,14 +3,7 @@ export default {
     <div class="container">
     <label class="my-title">Dettaglio Segreteria</label>
       <div class="row">
-        <Table 
-          :fields="[
-            {type: 'text', value: 'key'},
-            {type: 'text', value: 'value'},
-          ]"
-          :data="dettaglio"
-          :notitle="true"
-        ></Table>
+      <Grid :fields="dettaglio"></Grid>
         <div class="p-4">
         <label class="my-title">Titoli</label>
           <Table v-if="segreteria.titoli && segreteria.titoli.length > 0"
@@ -29,6 +22,7 @@ export default {
       
     </div>`,
   components: {
+    Grid: Vue.defineAsyncComponent(() => import("./utility/grid.js")),
     Table: Vue.defineAsyncComponent(() => import("./utility/table.js")),
   },
   data() {
@@ -44,20 +38,12 @@ export default {
   methods: {
     async cerca() {
       this.segreteria = await this.rest("segreteria?id=" + this.id);
-      const tit = {
-        "Nome": this.segreteria.nome,
-        "Email": this.segreteria.email,
-        "Numero di Telefono": this.segreteria.telefono,
-        "Partita IVA": this.segreteria.p_iva,
-      };
-      this.dettaglio = Object.entries(tit)
-        .filter((e) => e[1] && e[1].length > 0)
-        .map((e) => {
-          return {
-            key: e[0],
-            value: e[1],
-          };
-        });
+      this.dettaglio = [
+        {title: "Nome", value: this.segreteria.nome},
+        {title: "Email", label: this.segreteria.email, type: "url", value: "mailto://"+this.segreteria.email},
+        {title: "Numero di Telefono", label: this.segreteria.telefono, type: "url", value: "tel://"+this.segreteria.email},
+        {title: "Partita IVA", value: this.segreteria.p_iva},
+      ];
     },
   },
 };

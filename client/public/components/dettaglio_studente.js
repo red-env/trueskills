@@ -3,14 +3,7 @@ export default {
     <div class="container">
     <label class="my-title">Dettaglio Studente</label>
       <div class="row">
-        <Table 
-          :fields="[
-            {type: 'text', value: 'key'},
-            {type: 'text', value: 'value'},
-          ]"
-          :data="dettaglio"
-          :notitle="true"
-        ></Table>
+      <Grid :fields="dettaglio"></Grid>
         <div class="p-4">
         <label class="my-title">Certificati</label>
           <Table v-if="studente.certificati && studente.certificati.length > 0"
@@ -29,6 +22,7 @@ export default {
       
     </div>`,
   components: {
+    Grid: Vue.defineAsyncComponent(() => import("./utility/grid.js")),
     Table: Vue.defineAsyncComponent(() => import("./utility/table.js")),
   },
   data() {
@@ -44,21 +38,13 @@ export default {
   methods: {
     async cerca() {
       this.studente = await this.rest("studente?id=" + this.id);
-      const tit = {
-        "Nome": this.studente.nome,
-        "Cognome": this.studente.cognome,
-        "Email": this.studente.email,
-        "Numero di Telefono": this.studente.telefono,
-        "Codice Fiscale": this.studente.cf,
-      };
-      this.dettaglio = Object.entries(tit)
-        .filter((e) => e[1] && e[1].length > 0)
-        .map((e) => {
-          return {
-            key: e[0],
-            value: e[1],
-          };
-        });
+      this.dettaglio = [
+        {title: "Nome", value: this.studente.nome},
+        {title: "Cognome", value: this.studente.cognome},
+        {title: "Email", label: this.studente.email, type: "url", value: "mailto://"+this.studente.email},
+        {title: "Numero di Telefono", label: this.studente.telefono, type: "url", value: "tel://"+this.studente.email},
+        {title: "Codice Fiscale", value: this.studente.cf},
+      ];
       for (const certificato of this.studente.certificati) {
         certificato.voto = certificato.voto + "/" + certificato.titolo.max_voto;
         certificato.segreteria_label = certificato.titolo.segreteria.nome;

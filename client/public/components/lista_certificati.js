@@ -10,7 +10,14 @@ export default {
           {type: 'date', title: 'Start', attribute: 'start'},
           {type: 'date', title: 'End', attribute: 'end'},
         ],
-        [{type: 'text', title: 'Commento', attribute: 'commento'}]
+        [
+          {type: 'text', title: 'Nome Studente', attribute: 'studente_nome'},
+          {type: 'text', title: 'Cognome Studente', attribute: 'studente_cognome'}
+        ],
+        [
+          {type: 'text', title: 'Titolo', attribute: 'titolo_titolo'},
+          {type: 'text', title: 'Commento', attribute: 'commento'}
+        ]
       ]"
     ></Form>
     <Button v-if="utente.utente.ruolo_tipo == 'SEGRETERIA'" class="my-btn"@click="() => $router.push('/crea_certificato')">
@@ -21,7 +28,7 @@ export default {
           {title: 'Id', type: 'text', value: '_id'},
           {title: 'Studente', type: 'composed', mapping:(data) => data.studente.nome+' '+data.studente.cognome},
           {title: 'Titolo', type: 'composed', mapping:(data) => data.titolo.titolo},
-          {title: 'Data', type: 'text', value: 'data'},
+          {title: 'Data', type: 'date', value: 'data'},
           {title: '', type: 'button_label', value: 'Visualizza', select: select}
         ]"
         :data="certificati"

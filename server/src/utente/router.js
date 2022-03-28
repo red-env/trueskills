@@ -5,6 +5,7 @@ const f = require("../utility/formatter/response_formatter.js");
 const jwt_verify = require("../utility/middleware/jwt_verify");
 
 router.post("/api/login", f(controller.login));
+router.post("/api/cambia_password", jwt_verify, f(controller.cambiaPassword));
 router.post("/api/utente", f(controller.create));
 router.get("/api/utente", jwt_verify, f(controller.searchOne));
 

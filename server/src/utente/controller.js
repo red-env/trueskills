@@ -7,14 +7,17 @@ const encrypt = require("../utility/crypto/password_utente.js");
 const Exception = require("../utility/exception/exception");
 
 module.exports = {
-
   async login(req) {
     const req_utente = req.body;
-    if (!req_utente.username || !req_utente.password) throw Exception.CAMPI_AUTENTICAZIONE_MANCANTI;
-    const password = encrypt(req_utente.password);
-    const utente = await repository.findOneByUsername(req_utente.username, true);
-    if (!utente || utente.ruolo_tipo !== req_utente.ruolo) throw Exception.UTENTE_NON_ESISTENTE;
-    if (utente.password === password) {
+    if (!req_utente.username || !req_utente.password)
+      throw Exception.CAMPI_MANCANTI;
+    const utente = await repository.findOneByUsername(
+      req_utente.username,
+      true
+    );
+    if (!utente || utente.ruolo_tipo !== req_utente.ruolo)
+      throw Exception.UTENTE_NON_ESISTENTE;
+    if (utente.password === encrypt(req_utente.password)) {
       utente.password = undefined;
       let ruolo = {};
       if (utente.ruolo_tipo == ruoli.SEGRETERIA) {
@@ -27,6 +30,28 @@ module.exports = {
     } else {
       throw Exception.PASSWORD_ERRATA;
     }
+  },
+
+  async cambiaPassword(req) {
+    const req_utente = req.body;
+    if (
+      !req_utente.password ||
+      !req_utente.new_password ||
+      !req_utente.repeat_password
+    )
+      throw Exception.CAMPI_MANCANTI;
+    const utente = await repository.findOneById(req.auth.utente._id, true);
+    if (!utente) throw Exception.UTENTE_NON_ESISTENTE;
+    if (utente.password !== encrypt(req_utente.password))
+      throw Exception.PASSWORD_ERRATA;
+    if (req_utente.new_password !== req_utente.repeat_password)
+      throw Exception.PASSWORD_DIFFERENTI;
+    const model = await repository.changePassword(
+      req.auth.utente._id,
+      encrypt(req_utente.new_password)
+    );
+    model.password = undefined;
+    return model;
   },
 
   async create(req) {

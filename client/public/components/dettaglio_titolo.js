@@ -3,14 +3,7 @@ export default {
     <div class="container">
     <label class="my-title">Dettaglio Titolo</label>
       <div class="row">
-        <Table 
-          :fields="[
-            {type: 'text', value: 'key'},
-            {type: 'text', value: 'value'},
-          ]"
-          :data="dettaglio"
-          :notitle="true"
-        ></Table>
+      <Grid :fields="dettaglio"></Grid>
         <div class="p-4">
         <label class="my-title">Certificati</label>
         <Table v-if="titolo.certificati && titolo.certificati.length > 0"
@@ -29,6 +22,7 @@ export default {
       
     </div>`,
   components: {
+    Grid: Vue.defineAsyncComponent(() => import("./utility/grid.js")),
     Table: Vue.defineAsyncComponent(() => import("./utility/table.js")),
   },
   data() {
@@ -44,20 +38,12 @@ export default {
   methods: {
     async cerca() {
       this.titolo = await this.rest("titolo?id=" + this.id);
-      const tit = {
-        "Titolo": this.titolo.titolo,
-        "Descrizione": this.titolo.descrizione,
-        "Massimo Voto voto": this.titolo.max_voto+'',
-        "Data": this.titolo.data,
-      };
-      this.dettaglio = Object.entries(tit)
-        .filter((e) => e[1] && e[1].length > 0)
-        .map((e) => {
-          return {
-            key: e[0],
-            value: e[1],
-          };
-        });
+      this.dettaglio = [
+        {title: "Titolo", value: this.titolo.titolo},
+        {title: "Descrizione", value: this.titolo.descrizione},
+        {title: "Massimo Voto voto", value: this.titolo.max_voto},
+        {title: "Data", value: this.titolo.data, type: "date"},
+      ];
       for (const certificato of this.titolo.certificati) {
         certificato.studente_label = certificato.studente.nome + " " + certificato.studente.cognome;
       }

@@ -13,8 +13,8 @@ module.exports = {
     with_password
       ? Model.findOne({ username }).select("+password").exec()
       : Model.findOne({ username }),
-  findOneById: async (id) => {
-    const model = await Model.findById(id);
+  findOneById: async (id, with_password = false) => {
+    const model = await (with_password ? Model.findById(id).select("+password").exec() : Model.findById(id));
     if(model) return model;
     throw Exception.UTENTE_NON_ESISTENTE;
   },
@@ -24,5 +24,6 @@ module.exports = {
       $or: [{ username: regexp }],
     });
   },
+  changePassword: (_id, password) => Model.findByIdAndUpdate(_id, {password}),
   deleteAll: () => Model.deleteMany({}),
 };

@@ -24,7 +24,7 @@ export default {
         :fields="[
           {title: 'Titolo', type: 'text', value: 'titolo'},
           {title: 'Massimo Voto', type: 'text', value: 'max_voto'},
-          {title: 'Data', type: 'text', value: 'data'},
+          {title: 'Data', type: 'date', value: 'data'},
           {title: '', type: 'button_label', value: 'Visualizza', select: select}
         ]"
         :data="titoli"
