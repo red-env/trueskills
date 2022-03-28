@@ -116,7 +116,7 @@ const app = Vue.createApp({
   },
   methods: {
     async init() {
-      const jwt = localStorage.getItem(STORAGE_KEYS.JWT);
+      const jwt = localStorage.getItem("JWT");
       if (jwt) {
         this.utente = (
           await (
@@ -135,7 +135,7 @@ const app = Vue.createApp({
     },
     async login(jwt) {
       if (jwt) {
-        localStorage.setItem(STORAGE_KEYS.JWT, jwt);
+        localStorage.setItem("JWT", jwt);
         await this.init();
         if (this.utente) {
           const path = this.routes.find(
@@ -148,7 +148,7 @@ const app = Vue.createApp({
       }
     },
     logout() {
-      localStorage.removeItem(STORAGE_KEYS.JWT);
+      localStorage.removeItem("JWT");
       this.utente = undefined;
       this.$router.push("/login");
     },
@@ -178,7 +178,7 @@ app.mixin({
     ) {
       this.$emit("loading", true);
       let result;
-      const jwt = localStorage.getItem(STORAGE_KEYS.JWT);
+      const jwt = localStorage.getItem("JWT");
       options.headers = {};
       if (jwt) options.headers["Authorization"] = "Bearer " + jwt;
       if (options.method == "POST") {

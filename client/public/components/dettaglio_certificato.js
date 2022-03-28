@@ -87,7 +87,7 @@ export default {
     },
     visualizzaCerificato() {
       const headers = { "Content-type": "application/pdf" };
-      const jwt = localStorage.getItem(STORAGE_KEYS.JWT);
+      const jwt = localStorage.getItem("JWT");
       if (jwt) headers.Authorization = "Bearer " + jwt;
       const win = window.open();
       fetch("api/certificato_pdf?id=" + this.certificato._id, { headers }).then(
