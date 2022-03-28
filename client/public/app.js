@@ -80,7 +80,7 @@ const app = Vue.createApp({
           
           <div class="col">
            <Menu v-if="utente" :routes="routes" :utente="utente" @logout="logout"></Menu>
-           <router-view :class="[utente?'log':'nolog']" @fetch="fetch" @login="login" @notify="notify" @loading="setLoading" :utente="utente"></router-view>
+           <router-view :class="[utente?'log':'nolog']" @fetch="fetch" @login="login" @notify="notify" @loading="setLoading" :utente="utente" :routes="routes"></router-view>
            <div class="clear"></div>
           </div>
         </div>
@@ -139,14 +139,8 @@ const app = Vue.createApp({
       if (jwt) {
         localStorage.setItem("JWT", jwt);
         await this.init();
-        if (this.utente) {
-          const path = this.routes.find(
-            (r) =>
-              r.ruolo == this.utente.utente.ruolo_tipo ||
-              r.ruolo.includes(this.utente.utente.ruolo_tipo)
-          ).path;
-          if (path) this.$router.push(path);
-        }
+        this.$router.push("/dashboard");
+        this.redirect();
       }
     },
     logout() {
@@ -165,6 +159,18 @@ app.use(router);
 
 app.mixin({
   methods: {
+    redirect() {
+      if (this.utente) {
+        const path = this.routes.find(
+          (r) =>
+            r.ruolo == this.utente.utente.ruolo_tipo ||
+            r.ruolo.includes(this.utente.utente.ruolo_tipo)
+        ).path;
+        if (path) this.$router.push(path);
+      } else {
+        this.$router.push("/login");
+      }
+    },
     formatFilter(filter) {
       const entries = Object.entries(filter);
       return entries.length == 0
