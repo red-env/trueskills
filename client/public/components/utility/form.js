@@ -45,27 +45,30 @@ export default {
     },
   },
   created() {
-    this.structs.forEach((struct) =>
-      struct.forEach((field) => {
-        if (field.type == "select" && field.options.length > 0) {
-          this.data[field.attribute] = field.options[0].value;
-        }
-      })
-    );
+    this.init();
   },
   methods: {
+    init() {
+        this.structs.forEach((struct) =>
+        struct.forEach((field) => {
+          if (field.type == "select" && field.options.length > 0) {
+            this.data[field.attribute] = field.options[0].value;
+          }
+        })
+      );
+    },
     async done() {
       this.structs.forEach((struct) =>
-      struct.forEach((field) => {
-        if (field.value) {
-          this.data[field.attribute] = field.value;
-        }
-      })
-    );
-      this.$emit("done", Object.assign({}, this.data));
-      Object.keys(this.data).forEach((k) => {
-        delete this.data[k];
-      });
+        struct.forEach((field) => {
+          if (field.value) {
+            this.data[field.attribute] = field.value;
+          }
+        })
+      );
+      const toExport = Object.assign({}, this.data);
+      Object.keys(this.data).forEach((k) => delete this.data[k]);
+      this.init();
+      this.$emit("done", toExport);
     },
   },
 };

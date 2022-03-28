@@ -5,7 +5,7 @@ export default {
       <Form 
         title="Accedi come Segreteia Studenti"
         @done="(data) => {
-          data.ruolo = 'SEGRETERIA',
+          data.ruolo = 'SEGRETERIA';
           login(data);
         }"
         submit_text="ACCEDI"
@@ -19,7 +19,7 @@ export default {
       <Form 
         title="Accedi come Studente"
         @done="(data) => {
-          data.ruolo = 'STUDENTE',
+          data.ruolo = 'STUDENTE';
           login(data);
         }"
         submit_text="ACCEDI"
