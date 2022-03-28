@@ -28,13 +28,13 @@ export default {
     <div class="bottom">
       <div class="wrp-bottom">
         <div class="link-menu">
-          <a href="#" class="link">Home</a>
-          <a href="#" class="link">Ateneo</a>
-          <a href="#" class="link">Didattica</a>
-          <a href="#" class="link">Ricerca</a>
-          <a href="#" class="link">Qualità</a>
-          <a href="#" class="link">Community</a>
-          <a href="#" class="link">Info per</a>
+          <a href="https://www.unimc.it/it/" class="link">Home</a>
+          <a href="https://www.unimc.it/it/ateneo" class="link">Ateneo</a>
+          <a href="https://www.unimc.it/it/didattica" class="link">Didattica</a>
+          <a href="https://www.unimc.it/it/ricerca" class="link">Ricerca</a>
+          <a href="https://www.unimc.it/it/qualita" class="link">Qualità</a>
+          <a href="https://www.unimc.it/it/unimc-comunica" class="link">Community</a>
+          <a href="https://www.unimc.it/it/info-for" class="link">Info per</a>
           <a href="#" class="link active">certificazione</a>
         </div>
         <div class="search">

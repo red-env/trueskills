@@ -14,7 +14,7 @@ li.classList.add("menu-position-" + navbar.childNodes.length);
 const anchor_button = document.createElement("a");
 anchor_button.innerText = data.button_label;
 anchor_button.href = data.button_url;
-anchor_button.target = "_blank";
+//anchor_button.target = "_blank";
 li.appendChild(anchor_button);
 navbar.append(li);
 
