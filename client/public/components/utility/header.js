@@ -44,7 +44,7 @@ export default {
       </div>
     </div>
     
-    <div class="image-header" style='background-image: url("images/sfondo.jpg")'></div>
+    <div class="image-header" style='background-image: url("images/sfondo.jpg")'></div> 
 
   </header>
     `
