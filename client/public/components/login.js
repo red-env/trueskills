@@ -1,7 +1,9 @@
 export default {
   template: /*html*/ `
-  <div class="row">
-    <div class="col">
+    <p class="title_presentazione">Benvenuto nel sistema di gestione smart contract di UniMc</p>
+  <div class="row loginformapage">
+    
+    <div class="col login-segreteria">
       <Form 
         title="Accedi come Segreteia Studenti"
         @done="(data) => {
@@ -15,7 +17,7 @@ export default {
         ]"
       ></Form>
     </div>
-    <div class="col">
+    <div class="col login-studenti">
       <Form 
         title="Accedi come Studente"
         @done="(data) => {

@@ -23,6 +23,8 @@ export default {
             </div>
           </div>
           <input type="submit" class="my-btn my-bg-color-primary m-2" :value="submit_text">
+          <div v-if="title == 'Accedi come Studente'"  class="my-btn my-bg-color-primary m-2 fake_spid" >ENTRA CON SPID</div>
+          
         </form>
       </div>`,
   props: {

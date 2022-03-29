@@ -7,8 +7,35 @@
   padding-right: 0 !important;
 }
 
+.image-header{
+  height: 250px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.title_presentazione{
+  color: #7e0441;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  line-height: 1.1;
+  font-size: 36px;
+  display: block;
+  width: 900px;
+  text-align: center;
+  margin: 30px auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+
 .col{
   padding:0;
+  max-width: 1300px;
+  display: block;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .clear{
@@ -77,6 +104,7 @@
   text-align: center;
   color: white;
   font-weight: 600;
+  width: 100%;
 }
 .my-btn:hover {
   border-color: #7E0441;
@@ -97,4 +125,11 @@
   margin: 8px;
   border: 1px solid #7E0441;
   border-radius: 5px;
+}
+
+.fake_spid{
+  background-color: #007db3 !important;
+  color: #fff !important;
+  border: none !important;
+
 }

@@ -43,6 +43,8 @@ export default {
         <div class="clear"></div>
       </div>
     </div>
+    
+    <div class="image-header" style='background-image: url("images/sfondo.jpg")'></div>
 
   </header>
     `
