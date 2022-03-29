@@ -1,6 +1,5 @@
 require("dotenv").config();
 const controller_utente = require("../src/utente/controller.js");
-const controller_blockchain_type = require("../src/blockchain_type/controller.js");
 const controller_studente = require("../src/studente/controller.js");
 const controller_segreteria = require("../src/segreteria/controller.js");
 const controller_certificato = require("../src/certificato/controller.js");
@@ -8,7 +7,6 @@ const controller_titolo = require("../src/titolo/controller.js");
 const mongoose = require("mongoose");
 
 async function clean() {
-  await controller_blockchain_type.delete();
   await controller_studente.delete();
   await controller_segreteria.delete();
   await controller_certificato.delete();
@@ -16,13 +14,6 @@ async function clean() {
 }
 
 async function initializer() {
-  const blockchain_type = await controller_blockchain_type.create({
-    body: {
-      nome: "ETHEREUM",
-      url_base: "https://ropsten.etherscan.io/tx/",
-    },
-  });
-  console.log("Creato BLOCKCHAIN_TYPE: ", blockchain_type._id);
 
   const studente = await controller_utente.create({
     body: {

@@ -1,16 +1,9 @@
-const repository = require("./repository.js");
+const blockchain = require("../utility/constants/blockchain.js");
 
 module.exports = {
-  async create(req) {
-    return await repository.create(req.body);
-  },
   async searchMany(req) {
-    return await repository.findManyByName(req.query.nome);
-  },
-  async searchOne(req) {
-    return await repository.findOneById(req.query.id);
-  },
-  async delete(req) {
-    return await repository.deleteAll();
+    return Object.entries(blockchain).map((e) => {
+      return { value: e[0], label: e[1].name };
+    });
   },
 };

@@ -91,7 +91,7 @@ module.exports = async (certificato, res) => {
     "Times-Roman"
   );
   saltaLinee(doc, 3);
-  if (certificato.titolo.descrizione.length > 0)
+  if (certificato.titolo.descrizione && certificato.titolo.descrizione.length > 0)
     addTesto(
       doc,
       certificato.titolo.descrizione,
@@ -116,7 +116,7 @@ module.exports = async (certificato, res) => {
     colors.primary
   );
   saltaLinee(doc, 8);
-  if (certificato.titolo.max_voto)
+  if (certificato.titolo.max_voto && certificato.voto)
     addTesto(
       doc,
       "con votazione " + certificato.voto + "/" + certificato.titolo.max_voto,
@@ -125,7 +125,7 @@ module.exports = async (certificato, res) => {
       "Times-Roman"
     );
   saltaLinee(doc, 10);
-  if (certificato.commento.length > 0)
+  if (certificato.commento && certificato.commento.length > 0)
     addTesto(
       doc,
       "nota della commisione: " + certificato.commento,

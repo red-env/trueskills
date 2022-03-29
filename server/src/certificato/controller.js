@@ -38,7 +38,7 @@ module.exports = {
       throw Exception.VOTO_NON_VALIDO;
     if (req_certificato.titolo.segreteria._id != req.auth.ruolo._id)
       throw Exception.TITOLO_NON_ESISTENTE;
-    const res = await contract_digital_cv.signCertificato(req_certificato);
+    const res = await contract_digital_cv.signCertificato(req_certificato, req_certificato.blockchain_type);
     req.body.tx_hash = res.tx;
     req.body.tx_url = await f_url_tx(res.tx, req_certificato.blockchain_type);
     const certificato = await repo_certificato.create(req.body);

@@ -1,30 +1,14 @@
-const contract = require("truffle-contract");
 const certificates_artifact = require("../../../../smart_contract/build/contracts/DigitalCV.json");
-const truffle_config = require("../../../../smart_contract/truffle-config.js");
 const f_contract = require("../formatter/contract_formatter.js");
-
-const network = truffle_config.networks.ropsten;
-
-// Configuration
-function getContract() {
-    const provider = network.provider();
-    const DigitalCV = contract(certificates_artifact);
-    DigitalCV.setProvider(provider);
-    DigitalCV.defaults({
-      from: process.env.ACCOUNT_ADDRESS,
-    });
-    return DigitalCV;
-}
-
-const DigitalCV = getContract();
+const blockchain = require("../constants/blockchain.js");
 
 module.exports = {
   getAddress() {
     return certificates_artifact.networks[network.network_id].address;
   },
-  async signCertificato(certificato) {
+  async signCertificato(certificato, blockchain_key) {
     const text = f_contract(certificato);
-    const certificates = await DigitalCV.deployed();
+    const certificates = await blockchain[blockchain_key].contract.deployed();
     return await certificates.createCertificate(text);
   },
 };

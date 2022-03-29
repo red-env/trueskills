@@ -56,8 +56,8 @@ export default {
           attribute: "blockchain_type",
           options: blockchain_type.map((b) => {
             return {
-              label: b.nome,
-              value: b._id,
+              label: b.label,
+              value: b.value,
             };
           }),
         },
