@@ -29,13 +29,14 @@ export default {
           {title: 'Studente', type: 'composed', mapping:(data) => data.studente.nome+' '+data.studente.cognome},
           {title: 'Titolo', type: 'composed', mapping:(data) => data.titolo.titolo},
           {title: 'Data', type: 'date', value: 'data'},
-          {title: '', type: 'button_label', value: 'Visualizza', select: select}
+          {title: '', type: 'button_label', value: 'Visualizza', select: select},
+          {title: '', type: 'button_label', value: 'Copy', select: copyCertificato}
         ]"
         :data="certificati"
       ></Table>
   </div>`,
   props: {
-    utente: Object
+    utente: Object,
   },
   components: {
     Form: Vue.defineAsyncComponent(() => import("./utility/form.js")),
@@ -57,6 +58,11 @@ export default {
     },
     async select(obj) {
       this.$router.push("/dettaglio_certificato/" + obj._id);
+    },
+    async copyCertificato(obj) {
+      await navigator.clipboard.writeText(
+        window.location.href.split("#")[0] + "#/dettaglio_certificato/" + obj._id
+      );
     },
   },
 };

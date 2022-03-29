@@ -178,7 +178,7 @@
 
 .logo_certificato{
   display: block;
-  width: 100px;
+  width: 300px;
   margin: 0 auto;
   padding-bottom: 20px;
   padding-top: 20px;
@@ -193,3 +193,37 @@
   margin: 20px auto;
 }
 
+.popup-container {
+  left: 0;
+  top: 0;
+  position: fixed;
+  z-index: 5;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(100, 100, 100, 0.3);
+}
+
+.popup-body {
+  width: 300px;
+  background-color: #FFF;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #7E0441;
+  display: grid;
+  text-align: center;
+  justify-content: center;
+}
+
+.popup-buttons {
+  display: inline;
+}
+
+.close-popup {
+  margin-right: 10px;
+  justify-self: end;
+  right: 0;
+  top: 0;
+}

@@ -67,6 +67,10 @@ const routes = [
     path: "/",
     component: () => import("./components/dashboard.js"),
   },
+  {
+    path: "/:pathMatch(.*)*",
+    component: () => import("./components/page_not_found.js"),
+  },
 ];
 
 const app = Vue.createApp({
@@ -74,13 +78,14 @@ const app = Vue.createApp({
   <div>
     <Loading :loading="loading"></Loading>
     <Notification :notification="notification"></Notification>
+    <Popup :popup="popup"></Popup>
     <div class="container-fluid">
         <Header></Header
         <div class="row vh-100">
           
           <div class="col">
            <Menu v-if="utente" :routes="routes" :utente="utente" @logout="logout"></Menu>
-           <router-view :class="[utente?'log':'nolog']" @fetch="fetch" @login="login" @notify="notify" @loading="setLoading" :utente="utente" :routes="routes"></router-view>
+           <router-view :class="[utente?'log':'nolog']" @fetch="fetch" @login="login" @notify="notify" @sendPopup="sendPopup" @loading="setLoading" :utente="utente" :routes="routes"></router-view>
            <div class="clear"></div>
           </div>
         </div>
@@ -94,6 +99,9 @@ const app = Vue.createApp({
     ),
     Loading: Vue.defineAsyncComponent(() =>
       import("./components/utility/loading.js")
+    ),
+    Popup: Vue.defineAsyncComponent(() =>
+      import("./components/utility/popup.js")
     ),
     Notification: Vue.defineAsyncComponent(() =>
       import("./components/utility/notification.js")
@@ -111,6 +119,7 @@ const app = Vue.createApp({
       utente: undefined,
       loading: false,
       notification: { show: false },
+      popup: { show: false },
     };
   },
   async created() {
@@ -134,6 +143,14 @@ const app = Vue.createApp({
     },
     notify(flag, title, description = "") {
       this.notification = { flag, title, description, show: true };
+    },
+    sendPopup(title, description="", submit=undefined) {
+      this.popup = {
+        title,
+        description,
+        submit,
+        show: true,
+      };
     },
     async login(jwt) {
       if (jwt) {

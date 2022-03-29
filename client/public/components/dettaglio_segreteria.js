@@ -2,6 +2,7 @@ export default {
   template: /*html*/ `
     <div class="container">
     <label class="my-title">Dettaglio Segreteria</label>
+    <div v-if="segreteria">
       <div class="row">
       <Grid :fields="dettaglio"></Grid>
         <div class="p-4">
@@ -19,7 +20,10 @@ export default {
           ></Table>
         </div>
       </div>
-      
+      </div>
+      <div v-else class="p-4">
+        Segreteria non esistente
+      </div>
     </div>`,
   components: {
     Grid: Vue.defineAsyncComponent(() => import("./utility/grid.js")),

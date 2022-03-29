@@ -2,6 +2,7 @@ export default {
   template: /*html*/ `
     <div class="container">
     <label class="my-title">Dettaglio Titolo</label>
+    <div v-if="titolo">
       <div class="row">
       <Grid :fields="dettaglio"></Grid>
         <div class="p-4">
@@ -21,7 +22,10 @@ export default {
         ></Table>
         </div>
       </div>
-      
+      </div>
+      <div v-else class="p-4">
+        Titolo non esistente
+      </div>
     </div>`,
     props: {
       utente: Object

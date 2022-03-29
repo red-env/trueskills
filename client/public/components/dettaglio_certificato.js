@@ -2,9 +2,15 @@ export default {
   template: /*html*/ `
     <div class="container dettaglio-certificato">
     <label class="my-title">Dettaglio Certificato</label>
-    <img src="images/unimc.png" class="logo_certificato"/>
+    <div v-if="certificato">
+    <img :src="certificato.titolo.segreteria.stemma_url" class="logo_certificato"/>
       <div class="wrp-certificato">
         <Grid :fields="dettaglio"></Grid>
+      </div>
+      <div class="row justify-content-center">
+        <button class="row my-btn m-2" @click="copyCertificato()">
+          Copia Certificato
+        </button>
       </div>
       <div class="row justify-content-center">
         <button class="row my-btn m-2" @click="visualizzaCerificato()">
@@ -15,6 +21,10 @@ export default {
         <button class="row my-btn m-2" @click="accertaAutenticita()">
           Accerta Autenticità
         </button>
+      </div>
+      </div>
+      <div v-else class="p-4">
+        Certificato non esistente
       </div>
     </div>`,
   props: {
@@ -88,6 +98,9 @@ export default {
     },
     accertaAutenticita() {
       window.open(this.certificato.tx_url, "_blank");
+    },
+    async copyCertificato() {
+      await navigator.clipboard.writeText(window.location.href);
     },
   },
 };
