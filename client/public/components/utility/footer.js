@@ -229,7 +229,15 @@ export default {
         </a></li></ul></nav></aside></div><div class="portletWrapper" id="portletwrapper-706c6f6e652e666f6f746572706f72746c6574730a636f6e746578740a2f706f7274616c2f756e696d632f69740a616464726573732d616e642d736f6369616c" data-portlethash="706c6f6e652e666f6f746572706f72746c6574730a636f6e746578740a2f706f7274616c2f756e696d632f69740a616464726573732d616e642d736f6369616c"><div class="portletEmbed portlet-embed-address-and-social"><div><address>UNIVERSITÀ DI MACERATA 2018 © <br>Via Crescimbeni, 30/32 - 62100 Macerata</address>CHIAMA UNIMC 
 <ul><li> (+39) 0733 2581</li><li>(+39) 0733 258 2812</li><li>(+39) 0733 258 2813</li></ul>Numero Verde 800 22 40 71<br>PEC ateneo@pec.unimc.it <br><br>Partita IVA: 00177050432</div><div>
 
-<img src="images/social.png" class="social_footer_icon"/>
+<p class="social_footer_icon">
+    <img src="images/social.png"/>
+    <a class="social_footer_icon_blockchain" target="_blank" href="https://mumbai.polygonscan.com/address/0xd3fBcedEf11004cC1c0aF64e54f4ca268CA0769C">
+        <img width="26" src="images/polygon.svg">
+    </a>
+    <a class="social_footer_icon_blockchain" target="_blank" href="https://ropsten.etherscan.io/address/0xb5CBC70Eb4CD330adB823e9687F6883EcaC3607F">
+        <img width="26" src="images/ethereum.svg">
+    </a>
+</p>
  </div></div></div></div></div></div>
       </footer>
     `

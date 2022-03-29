@@ -246,3 +246,8 @@ p,a,span,div{
     display: block;
     margin-right: -10px;
 }
+
+.social_footer_icon_blockchain{
+    margin: 0;
+    padding: 5px;
+}
