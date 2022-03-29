@@ -1,3 +1,5 @@
+const blockchain = require("../constants/blockchain.js");
+
 module.exports = async (tx, type) => {
-    return type.scan_url + tx;
+    return blockchain[type].scan_url + tx;
 };
