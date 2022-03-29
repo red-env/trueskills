@@ -104,8 +104,13 @@
   text-align: center;
   color: white;
   font-weight: 600;
+
+}
+
+.loginformapage .my-btn{
   width: 100%;
 }
+
 .my-btn:hover {
   border-color: #7E0441;
   background-color: white;
@@ -133,3 +138,58 @@
   border: none !important;
 
 }
+
+/*menu*/
+
+.menu{
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.log{
+  width: calc(100% - 300px);
+  display: block;
+  top: 0;
+  bottom: 0;
+  margin-left: 300px;
+  min-height: 680px;
+}
+
+/*tabella certificato*/
+.dettaglio-certificato .table td,
+.dettaglio-certificato .table th{
+  border: none;
+}
+
+.dettaglio-certificato{
+  display: block;
+  margin-bottom: 40px;
+}
+
+.dettaglio-certificato.nolog{
+  margin: 0 auto;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 40px;
+}
+
+.logo_certificato{
+  display: block;
+  width: 100px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  padding-top: 20px;
+
+}
+
+.wrp-certificato .table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+  max-width: 600px;
+  margin: 20px auto;
+}
+

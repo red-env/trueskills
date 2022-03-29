@@ -1,8 +1,9 @@
 export default {
   template: /*html*/ `
-    <div class="container">
+    <div class="container dettaglio-certificato">
     <label class="my-title">Dettaglio Certificato</label>
-      <div class="row">
+    <img src="images/unimc.png" class="logo_certificato"/>
+      <div class="wrp-certificato">
         <Grid :fields="dettaglio"></Grid>
       </div>
       <div class="row justify-content-center">

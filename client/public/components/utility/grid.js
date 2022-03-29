@@ -1,6 +1,6 @@
 export default {
     template: /*html*/`
-    <div>
+    
         <table v-if="fields.length > 0" class="table table-striped text-center" >
             <tbody scope="row" v-for="(field, k) in fields" :key="k">
                 <div v-if="field.value && field.value.length>0">
@@ -14,7 +14,6 @@ export default {
                 </div>
             </tbody>
         </table>
-    </div>
     `,
     props: {
         fields: Array
