@@ -39,10 +39,11 @@ export default {
       type: String,
       default: "Pulisci dati Filtro",
     },
-    data: {
-      type: Object,
-      default: {},
-    },
+  },
+  data() {
+    return {
+      data: {}
+    }
   },
   created() {
     this.init();
