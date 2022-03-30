@@ -6,7 +6,7 @@ export default {
                 <span aria-hidden="true">&times;</span>
             </button>
             <label class="my-title">{{popup.title}}</label>
-            <label v-html="popup.description"></label>
+            <label class="my-description" v-html="popup.description"></label>
             <div class="popup-buttons">
                 <button class="my-btn" v-if="popup.submit" @click="submit()">{{popup.submit.label}}</button>
             </div>
