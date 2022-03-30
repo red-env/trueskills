@@ -60,6 +60,10 @@ export default {
       this.$router.push("/dettaglio_certificato/" + obj._id);
     },
     async copyCertificato(obj) {
+      this.$emit(
+          "sendPopup",
+          "Certificato",
+          `Il link del certificato è stato copiato`);
       await navigator.clipboard.writeText(
         window.location.href.split("#")[0] + "#/dettaglio_certificato/" + obj._id
       );
