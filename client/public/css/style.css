@@ -107,9 +107,7 @@
 
 }
 
-.loginformapage .my-btn{
-  width: 100%;
-}
+
 
 .my-btn:hover {
   border-color: #7E0441;
@@ -137,6 +135,31 @@
   color: #fff !important;
   border: none !important;
 
+}
+
+/*login page*/
+
+.loginformapage .my-btn{
+  width: 100%;
+}
+
+.subtitle_presentazione{
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.form_subtitle{
+  padding: 0 20px;
+}
+
+.register_action_wrp{
+  text-align: center;
+  margin-top: 25px;
+}
+
+.register_action_wrp .register_action{
+  color: #7E0441;
+  text-decoration: underline;
 }
 
 /*menu*/
@@ -192,6 +215,8 @@
   max-width: 600px;
   margin: 20px auto;
 }
+
+/*popup*/
 
 .popup-container {
   left: 0;

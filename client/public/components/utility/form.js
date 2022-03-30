@@ -4,6 +4,7 @@ export default {
     `<div class="p-4">
         <label v-if="title.length > 0" class="my-title">{{title}}</label>
         <form class="p-4 my-form" @submit.prevent="done()">
+        <p v-if="subtitle.length > 0" class="form_subtitle">{{subtitle}}</p>
           <div v-for="(row, r) in structs" :key="r" class="row">
             <div v-for="(struct, c) in row" :key="c" class="col form-group">
               <label :for="struct.attribute">{{struct.title}}</label>
@@ -23,12 +24,25 @@ export default {
             </div>
           </div>
           <input type="submit" class="my-btn my-bg-color-primary m-2" :value="submit_text">
-          <div v-if="title == 'Accedi come Studente'"  class="my-btn my-bg-color-primary m-2 fake_spid" >ENTRA CON SPID</div>
+          <div v-if="type == 'studente'"  class="my-btn my-bg-color-primary m-2 fake_spid" >ENTRA CON SPID</div>
+          
+          <div v-if="type == 'studente'"  class="register_action_wrp" >
+            <p class="register_text">non sei ancora registrato?</p>
+            <a href="#" class="register_action">Registrati</a>
+           </div>
           
         </form>
       </div>`,
   props: {
     title: {
+      type: String,
+      default: "",
+    },
+    subtitle: {
+      type: String,
+      default: "",
+    },
+    type: {
       type: String,
       default: "",
     },
