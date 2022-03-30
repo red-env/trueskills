@@ -100,6 +100,10 @@ export default {
       window.open(this.certificato.tx_url, "_blank");
     },
     async copyCertificato() {
+      this.$emit(
+          "sendPopup",
+          "Certificato",
+          `Il link del certificato è stato copiato`);
       await navigator.clipboard.writeText(window.location.href);
     },
   },
