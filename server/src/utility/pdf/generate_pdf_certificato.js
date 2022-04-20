@@ -112,7 +112,7 @@ module.exports = async (certificato, res) => {
   addTesto(
     doc,
     certificato.studente.nome + " " + certificato.studente.cognome,
-    40,
+    38,
     colors.primary
   );
   saltaLinee(doc, 8);
@@ -136,9 +136,9 @@ module.exports = async (certificato, res) => {
     doc,
     "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" +
       certificato.tx_url,
-    430,
+    470,
     certificato.tx_url,
-    [80, 80]
+    [60, 60]
   );
 
   doc.end();
