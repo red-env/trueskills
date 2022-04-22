@@ -281,3 +281,8 @@
   max-width: 25px;
   margin-right: 5px;
 }
+
+.my-description {
+  padding: 10px;
+  margin-left: 15px;
+}

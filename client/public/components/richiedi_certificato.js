@@ -2,6 +2,7 @@ export default {
   template: /*html*/ `
   <div>
   <label class="my-title">Richiedi Certificato</label>
+  <p class="my-description">Se hai conseguito il titolo prima del 2020 richiedi alla segreteria la sua digitalizzazione</p>
     <Form 
       @done="(data) => cerca(data)"
       submit_text="Richiedi certificazione"
