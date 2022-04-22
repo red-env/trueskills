@@ -6,6 +6,7 @@ export default {
     
     <div class="col login-segreteria">
       <Form 
+        not_hide="true"
         title="Segreteria"
         subtitle="Accesso riservato al personale UNIMC"
         @done="(data) => {
@@ -21,6 +22,7 @@ export default {
     </div>
     <div class="col login-studenti">
       <Form 
+        not_hide="true"
         title="Area Studente"
         type="studente"
         subtitle="Accedi per recuperare i tuoi titoli in formato digitale"

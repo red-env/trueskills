@@ -3,6 +3,7 @@ export default {
   <div>
   <label class="my-title">Crea Certificato</label>
     <Form :key="formKey"
+      not_hide="true"
       @done="(data) => crea(data)"
       submit_text="Crea"
       :structs="structs"

@@ -3,7 +3,8 @@ export default {
     /*html*/
     `<div class="p-4">
         <label v-if="title.length > 0" class="my-title">{{title}}</label>
-        <form class="p-4 my-form" @submit.prevent="done()">
+        <button v-if="!not_hide" class="my-btn" @click="toggle" v-html="hide ? apri_filtro + ' &#8595;' : 'Chiudi &#8593;'"></button>
+        <form v-show="not_hide || !hide" class="p-4 my-form" @submit.prevent="done()">
         <p v-if="subtitle.length > 0" class="form_subtitle">{{subtitle}}</p>
           <div v-for="(row, r) in structs" :key="r" class="row">
             <div v-for="(struct, c) in row" :key="c" class="col form-group">
@@ -39,6 +40,14 @@ export default {
         </form>
       </div>`,
   props: {
+    not_hide: {
+      type: Boolean,
+      default: false
+    },
+    apri_filtro: {
+      type: String,
+      default: "Cerca"
+    },
     end_html: {
       type: String
     },
@@ -66,13 +75,17 @@ export default {
   },
   data() {
     return {
-      data: {}
+      data: {},
+      hide: true
     }
   },
   created() {
     this.init();
   },
   methods: {
+    toggle() {
+      this.hide = !this.hide;
+    },
     init() {
         this.structs.forEach((struct) =>
         struct.forEach((field) => {

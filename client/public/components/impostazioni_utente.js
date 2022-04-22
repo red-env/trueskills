@@ -3,6 +3,7 @@ export default {
     <div>
     <label class="my-title">Impostazioni Utente</label>
       <Form 
+        not_hide="true"
         title="Cambia Password"
         @done="(data) => cambioPassword(data)"
         submit_text="Cambia Password"
