@@ -33,11 +33,21 @@ export default {
           [{type: 'text', title: 'Username', attribute: 'username'}],
           [{type: 'password', title: 'Password', attribute: 'password'}]
         ]"
+        :end_html="end_html"
       ></Form>
     </div>
   </div>`,
   components: {
     Form: Vue.defineAsyncComponent(() => import("./utility/form.js")),
+  },
+  data() {
+    return {
+      end_html: `
+        <div class="register_action_wrp" >
+          <p class="register_text">non sei ancora registrato?</p>
+        </div>
+        <div class="my-btn my-bg-color-primary m-2 fake_spid" >ENTRA CON SPID</div>`
+    }
   },
   methods: {
     async login(utente) {

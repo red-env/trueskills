@@ -256,3 +256,28 @@
   right: 0;
   top: 0;
 }
+
+.grid_wrap {
+  list-style-type: none;
+  padding: 0;
+}
+
+.grid_content {
+  padding: 5px;
+  border-top: 1px solid #ced4da;
+  margin-top: 5px;
+  display: flex;
+}
+.grid_content p {
+  order: 2;
+}
+
+.grid_content:last-child {
+  border-bottom: 1px solid #ced4da;
+  margin-bottom: 5px;
+}
+
+.icon_grid {
+  max-width: 25px;
+  margin-right: 5px;
+}

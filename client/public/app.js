@@ -6,6 +6,12 @@ const routes = [
     component: () => import("./components/login.js"),
   },
   {
+    path: "/richiedi_certificato",
+    name: "Richiedi Certificato",
+    ruolo: "STUDENTE",
+    component: () => import("./components/richiedi_certificato.js"),
+  },
+  {
     path: "/lista_certificati",
     name: "Lista Certificati",
     ruolo: ["SEGRETERIA", "STUDENTE"],

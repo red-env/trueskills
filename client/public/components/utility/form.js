@@ -18,22 +18,30 @@ export default {
                   {{option.label}}
                 </option>
               </select>
+
+              <ul v-else-if="struct.type=='grid'"
+                class="grid_wrap" :name="struct.attribute" :id="struct.attribute" v-model="data[struct.attribute]">
+                  <li v-for="(option, key) in struct.options" :key="key" :value="option.value" :class="'grid_content gc_'+key">
+                    <p>{{option.label}}</p> 
+                    <img :src="option.url" :class="'icon_grid ic_'+key"></img>
+                  </li>
+              </ul>
+
               <textarea v-else-if="struct.type=='textarea'" :type="struct.type" class="form-control" :id="struct.attribute" v-model="data[struct.attribute]"></textarea>
               <label v-else-if="struct.type=='label'" :type="struct.type" class="form-control" :id="struct.attribute">{{struct.label}}</label>
               <input v-else :type="struct.type" class="form-control" :id="struct.attribute" v-model="data[struct.attribute]">
             </div>
           </div>
           <input type="submit" class="my-btn my-bg-color-primary m-2" :value="submit_text">
-          <div v-if="type == 'studente'"  class="my-btn my-bg-color-primary m-2 fake_spid" >ENTRA CON SPID</div>
-          
-          <div v-if="type == 'studente'"  class="register_action_wrp" >
-            <p class="register_text">non sei ancora registrato?</p>
-            <a href="#" class="register_action">Registrati</a>
-           </div>
-          
+
+          <div v-if="end_html" v-html="end_html"></div>
+
         </form>
       </div>`,
   props: {
+    end_html: {
+      type: String
+    },
     title: {
       type: String,
       default: "",
