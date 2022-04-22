@@ -10,7 +10,7 @@ const data = {
     },
   ],
   button_label: "CERTIFICAZIONE",
-  button_url: "https://dev-digital-cv.herokuapp.com/",
+  button_url: "http://93.186.254.199:8000/",
 };
 
 const navbar = document.getElementsByClassName("rd-navbar-nav")[0];
