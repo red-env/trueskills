@@ -1,7 +1,7 @@
 export default {
   template: /*html*/ `
     <p class="title_presentazione">BENVENUTO NEL SISTEMA DI CERTIFICAZIONE DIGITALE TITOLI UNIMC</p>
-    <p class="subtitle_presentazione">Il servizio offerto da Unicam per introdurre nel tuo curriculim prova ufficiale del titolo conseguito presso la nostra università.</p>
+    <p class="subtitle_presentazione">Il servizio offerto da Unimc per introdurre nel tuo curriculim prova ufficiale del titolo conseguito presso la nostra università.</p>
   <div class="row loginformapage">
     
     <div class="col login-segreteria">
