@@ -75,9 +75,6 @@ module.exports = async (certificato, res) => {
   });
   addCornice(doc);
 
-  certificato.titolo.segreteria.stemma_url =
-    "https://apre.it/wp-content/uploads/2021/03/Universita-degli-Studi-di-Macerata.jpg"; // TODO
-
   if (certificato.titolo.segreteria.stemma_url)
     await addImmagine(doc, certificato.titolo.segreteria.stemma_url);
   saltaLinee(doc, 30);
