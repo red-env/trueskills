@@ -86,7 +86,7 @@ const app = Vue.createApp({
     <Notification :notification="notification"></Notification>
     <Popup :popup="popup"></Popup>
     <div class="container-fluid">
-        <Header></Header
+        <!--Header></Header-->
         <div class="row vh-100">
           
           <div class="col">
@@ -95,7 +95,7 @@ const app = Vue.createApp({
            <div class="clear"></div>
           </div>
         </div>
-        <Footer></Footer>
+        <!--Footer></Footer-->
       </div>
     </div>
     `,

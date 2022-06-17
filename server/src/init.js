@@ -49,7 +49,7 @@ async function initializer() {
         telefono: "800054000",
         nome: "UNICAM",
         p_iva: "00291660439",
-        stemma_url: "https://www.unicam.it/themes/custom/italiagov/unicam/webp/logo.webp"
+        stemma_url: "https://upload.wikimedia.org/wikipedia/it/b/bd/Logo_unicam.png"
       },
     },
     {

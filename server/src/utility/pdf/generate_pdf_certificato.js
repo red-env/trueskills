@@ -2,7 +2,7 @@ const PDFDocument = require("pdfkit");
 const fetch = require("node-fetch");
 
 const colors = {
-  primary: "#7E0441",
+  primary: "#AA2213",
   dark: "#000000",
   light_dark: "#444444",
 };
