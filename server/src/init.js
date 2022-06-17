@@ -15,38 +15,73 @@ async function clean() {
 }
 
 async function initializer() {
-
-  const body_studente = {
-    username: "segreteria",
-    password: "password",
-    ruolo_tipo: "SEGRETERIA",
-    ruolo: {
-      email: "ateneo@pec.unimc.it",
-      telefono: "800224071",
-      nome: "UNIMC",
-      p_iva: "00177050432",
-      stemma_url: "https://apre.it/wp-content/uploads/2021/03/Universita-degli-Studi-di-Macerata.jpg"
+  const bodies = [
+    {
+      username: "UNIVPM",
+      password: "password",
+      ruolo_tipo: "SEGRETERIA",
+      ruolo: {
+        email: "protocollo@pec.univpm.it",
+        telefono: "+390712201",
+        nome: "UNIVPM",
+        p_iva: "00382520427",
+        stemma_url: "https://upload.wikimedia.org/wikipedia/it/thumb/9/9a/Logo_Universit%C3%A0_Politecnica_delle_Marche.svg/1920px-Logo_Universit%C3%A0_Politecnica_delle_Marche.svg.png"
+      },
     },
-  };
-  console.log("Creazione STUDENTE: ", body_studente.username, body_studente.password);
-  const studente = await controller_utente.create({ body: body_studente });
-  console.log("Creato STUDENTE: ", studente._id);
-
-  const body_segreteria = {
-    username: "studente",
-    password: "password",
-    ruolo_tipo: "STUDENTE",
-    ruolo: {
-      email: "gemipampi@gmail.com",
-      telefono: "3663452479",
-      nome: "Geremia",
-      cognome: "Pompei",
-      cf: "PMPGRM99E07E783G",
+    {
+      username: "UNIPG",
+      password: "password",
+      ruolo_tipo: "SEGRETERIA",
+      ruolo: {
+        email: "protocollo@cert.unipg.it",
+        telefono: "390755851",
+        nome: "UNIPG",
+        p_iva: "00448820548",
+        stemma_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Logo_unipg.svg/1200px-Logo_unipg.svg.png"
+      },
     },
-  };
-  console.log("Creazione SEGRETERIA: ", body_segreteria.username, body_segreteria.password);
-  const segreteria = await controller_utente.create({ body: body_segreteria });
-  console.log("Creata SEGRETERIA: ",  segreteria._id);
+    {
+      username: "UNICAM",
+      password: "password",
+      ruolo_tipo: "SEGRETERIA",
+      ruolo: {
+        email: "protocollo@pec.unicam.it",
+        telefono: "800054000",
+        nome: "UNICAM",
+        p_iva: "00291660439",
+        stemma_url: "https://www.unicam.it/themes/custom/italiagov/unicam/webp/logo.webp"
+      },
+    },
+    {
+      username: "UNIMC",
+      password: "password",
+      ruolo_tipo: "SEGRETERIA",
+      ruolo: {
+        email: "ateneo@pec.unimc.it",
+        telefono: "800224071",
+        nome: "UNIMC",
+        p_iva: "00177050432",
+        stemma_url: "https://apre.it/wp-content/uploads/2021/03/Universita-degli-Studi-di-Macerata.jpg"
+      },
+    }, {
+      username: "studente",
+      password: "password",
+      ruolo_tipo: "STUDENTE",
+      ruolo: {
+        email: "gemipampi@gmail.com",
+        telefono: "3663452479",
+        nome: "Geremia",
+        cognome: "Pompei",
+        cf: "PMPGRM99E07E783G",
+      },
+    }
+  ];
+  for (const body of bodies) {
+    console.log(`INIZIO Creazione ${body.ruolo_tipo}: `, body.username, body.password);
+    const utente = await controller_utente.create({ body });
+    console.log(`FINE Creazione ${body.ruolo_tipo}: `,  utente._id);
+  }
+
 }
 
 async function main() {
